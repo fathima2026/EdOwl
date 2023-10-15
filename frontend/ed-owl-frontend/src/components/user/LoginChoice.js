@@ -11,19 +11,20 @@ const LoginChoice = () => {
   const student = "student"
   const teacher = "teacher"
   return (
-    <div className='container' style={{background:'white',width:'50%',height:'500px',marginTop:'50px'}}>
+    <div className='container' style={{width:'50%',height:'700px',borderRadius:'1px'}}>
 
-     <div className='row justify-content-center' style={{paddingTop:'180px'}}>
-      <div className='col'> 
-        <Button as={Link} to={`/login/`+student} className='me-1' color='success' >
-        STUDENT
-        </Button>
+     <div className='row justify-content-center h-75' style={{paddingTop:'130px'}}>
+      <div className='col-md-5' style={{background:'white',borderRadius:'10px',borderColor:'black'}}> 
+      <Button style={{marginTop:'50px',}} as={Link} to={`/login/`+teacher} className='me-1 warning'>
+        Student
+      </Button>
+      <img src="/Image/teacher.png" style={{height:'150px',display:'block',margin:'auto',marginTop:'30px'}}alt="Diccionario Png - Personalised 'owl' Teacher Card@pngkey.com"></img>
       </div>
-      <div className='col'>
-      <Button as={Link} to={`/login/`+teacher} className='me-1' color='danger'>
+      <div className='col-md-5 offset-md-2' style={{background:'white',borderRadius:'10px'}}>
+      <Button style={{marginTop:'50px'}} as={Link} to={`/login/`+teacher} className='me-1' variant="warning">
         TEACHER
       </Button>
-      <img src="/Image/teacher.png" style={{height:'150px',display:'block',margin:'auto'}}alt="Diccionario Png - Personalised 'owl' Teacher Card@pngkey.com"></img>
+      <img src="/Image/pngwing.com.png" style={{height:'180px',display:'block',margin:'auto',marginLeft:'80px'}}alt="Diccionario Png - Personalised 'owl' Teacher Card@pngkey.com"></img>
 
       </div>
     

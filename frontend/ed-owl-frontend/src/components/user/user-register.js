@@ -173,7 +173,7 @@ useEffect(() => {
   const studentLoginStatus = localStorage.getItem('studentLoginStatus')
  
   return (
-    <MDBContainer fluid style={{width: '60%'}}>
+    <MDBContainer fluid style={{width: '60%',height:'700px'}}>
 
     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
      <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}>

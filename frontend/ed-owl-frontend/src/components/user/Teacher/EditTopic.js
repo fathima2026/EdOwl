@@ -2,7 +2,7 @@ import React from 'react'
 import {Link, useParams} from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 import axios from 'axios';
 import {useState, useEffect } from 'react'
 import Swal from 'sweetalert2'

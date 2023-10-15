@@ -1,12 +1,14 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 import axios from 'axios';
-import {useState} from 'react'
-const baseUrl = 'http://127.0.0.1:8000/api/module/'
+import {useState,useEffect} from 'react'
+import Swal from 'sweetalert2'
+import { useParams } from 'react-router-dom';
+const baseUrl = 'http://127.0.0.1:8000/api'
 
-const AddCourse = () => {
+const EditModule = () => {
   const [moduleData, setModuleData] = useState({
 
     title: '',
@@ -15,6 +17,27 @@ const AddCourse = () => {
     code:'',
 
   });
+
+  const {module_id} = useParams();
+
+  useEffect(() =>{ 
+
+    try{
+     axios.get(baseUrl+'/teacher-module-detail/'+module_id).then((response)=>{
+
+      setModuleData( 
+     {title: response.data.title,
+      description: response.data.description,
+      teacher: response.data.teacher,
+      code:response.data.code}
+      ); 
+
+     });}
+     catch(error){
+      console.log(error)
+     }
+
+   },[]);
 
   const handleChange=(event) => {
     console.log(event.target.name,event.target.value)
@@ -35,11 +58,23 @@ const AddCourse = () => {
     event.preventDefault()
     
     try{
-    axios.post(baseUrl,moduleFormData).then((response)=>{
+    axios.put(baseUrl+'/teacher-module-detail/'+module_id,moduleFormData).then((response)=>{
       
       console.log(response.data)
       event.preventDefault()
 
+      if(response.status == 200){
+        Swal.fire({
+        
+          title: 'DATA HAS BEEN UPDATED SUCCESSFULLY',
+          icon: 'success',
+          toast:true,
+          timer:3000,
+          timerProgressBar: true,
+          showConfirmButton: false
+  
+         })
+      }
       setModuleData({
 
         title: '',
@@ -84,4 +119,4 @@ const AddCourse = () => {
   )
 }
 
-export default AddCourse
+export default EditModule

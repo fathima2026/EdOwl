@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from './Sidebar'
+import Sidebar from '../Sidebar'
 import {Button} from 'react-bootstrap'
 import Card from 'react-bootstrap/Card';
 import {Link} from 'react-router-dom'
