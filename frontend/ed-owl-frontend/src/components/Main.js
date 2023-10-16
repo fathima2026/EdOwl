@@ -39,12 +39,12 @@ const Main = () => {
 
         <Route path='unauthorized' element={<Unauthorized/>}></Route>
 
+        <Route path = "/student-logout" element={<StudentLogout/>}/>
 
 
         {/* Protect routes */}
 
         <Route element = {<RequireAuth allowedRoles={["student"]}/>} >
-        <Route path = "/dashboard" element={<Dashboard/>}/>
 
         </Route>
         <Route element = {<RequireAuth allowedRoles={["teacher"]}/>} >
@@ -52,7 +52,6 @@ const Main = () => {
         
         <Route path = "teacher/edit-module/:module_id" element={<EditCourse/>}/>
         <Route path = "/dashboard" element={<Dashboard/>}/>
-        <Route path = "/student-logout" element={<StudentLogout/>}/>
         <Route path = "teacher/courses" element={<MyCourses/>}/>
         <Route path = "/teacher/add-course" element={<AddCourse/>}/>
         <Route path = "/teacher/add-topic/:module_id" element={<AddTopic/>}/>

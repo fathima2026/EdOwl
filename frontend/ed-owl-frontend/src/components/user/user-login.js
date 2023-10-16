@@ -53,14 +53,16 @@ const Login = () => {
 
       
         const response = await axios.post(baseUrl+role+'/login',studentFormData)
+        e.preventDefault();
 
    
        console.log(response)
 
         if(response.data.bool == true){
+          e.preventDefault();
+
                   localStorage.setItem('studentLoginStatus', true)
                   localStorage.setItem('id', response.data.id)
-                  // window.location.href = '/dashboard'
                   console.log(JSON.stringify(response?.data));
                   console.log(JSON.stringify(response));
                   
@@ -87,10 +89,10 @@ const Login = () => {
                   setAuth({ email, pwd, roles, accessToken });
                   setEmail('');
                   setPwd('');
-                  navigate(from, {replace:true})
+                  navigate('/dashboard')
 
- 
-                }
+                
+                  }
                 else{
                   setErrMsg("Invalid Email or Password")
          
