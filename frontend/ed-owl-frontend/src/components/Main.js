@@ -19,6 +19,8 @@ import LayoutComponent from './LayoutComponent'
 import RequireAuth from './user/RequireAuth'
 import LoginChoice from './user/LoginChoice'
 import Unauthorized from './user/Unauthorized'
+import StudentDashboard from './user/Student/StudentDashboard'
+
 const Main = () => {
   return (
 
@@ -42,11 +44,10 @@ const Main = () => {
         <Route path = "/student-logout" element={<StudentLogout/>}/>
 
 
+
         {/* Protect routes */}
 
-        <Route element = {<RequireAuth allowedRoles={["student"]}/>} >
 
-        </Route>
         <Route element = {<RequireAuth allowedRoles={["teacher"]}/>} >
 
         
@@ -61,9 +62,15 @@ const Main = () => {
         <Route path = "/teacher/edit-module/:module_id" element={<EditCourse/>}/>
         </Route>
         {/* catch all */}
-        <Route path="*"/>
-
+        <Route element={<RequireAuth allowedRoles={["student"]} />}>
+          <Route path="student-dashboard" element={<StudentDashboard />} />
         </Route>
+        
+        
+        
+        </Route>
+
+
    
         </Routes>
         <FooterComponent/>

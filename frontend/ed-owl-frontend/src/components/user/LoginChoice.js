@@ -2,8 +2,10 @@ import React from 'react'
 import { MDBContainer} from 'mdb-react-ui-kit'
 import { Link } from 'react-router-dom'
 import {Button} from 'react-bootstrap'
+import useAuth from '../../hooks/useAuth';
 
 const LoginChoice = () => {
+
 
   const handleSubmit = () => {
 
@@ -15,7 +17,7 @@ const LoginChoice = () => {
 
      <div className='row justify-content-center h-75' style={{paddingTop:'130px'}}>
       <div className='col-md-5' style={{background:'white',borderRadius:'10px',borderColor:'black'}}> 
-      <Button style={{marginTop:'50px',}} as={Link} to={`/login/`+teacher} className='me-1 warning'>
+      <Button style={{marginTop:'50px',}} as={Link} to={`/login/`+student} className='me-1 warning'>
         Student
       </Button>
       <img src="/Image/teacher.png" style={{height:'150px',display:'block',margin:'auto',marginTop:'30px'}}alt="Diccionario Png - Personalised 'owl' Teacher Card@pngkey.com"></img>

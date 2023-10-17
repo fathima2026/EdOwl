@@ -89,7 +89,7 @@ const Login = () => {
                   setAuth({ email, pwd, roles, accessToken });
                   setEmail('');
                   setPwd('');
-                  navigate('/dashboard')
+                  navigate('/student-dashboard')
 
                 
                   }

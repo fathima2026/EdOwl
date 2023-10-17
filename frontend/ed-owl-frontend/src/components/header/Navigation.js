@@ -69,11 +69,12 @@ const Navigation = () => {
               {studentLoginStatus!='true' && <><NavDropdown.Item componentClass='span' as={Link} to="/role">Login</NavDropdown.Item>
               <NavDropdown.Item componentClass='span' as={Link} to="/register">Register</NavDropdown.Item></>}
               
-              <NavDropdown.Divider />
               <NavDropdown.Item >
+              {studentLoginStatus=='true' && <>
               <NavDropdown.Item componentClass='span'>Account settings</NavDropdown.Item>
               <NavDropdown.Item componentClass='span'as={Link} to="/dashboard">Dashboard</NavDropdown.Item>
-              <NavDropdown.Item componentClass='span'as={Link} to="/student-logout">Logout</NavDropdown.Item>
+              <NavDropdown.Item componentClass='span'as={Link} to="/student-logout">Logout</NavDropdown.Item></>}
+              
 
               </NavDropdown.Item>
       </NavDropdown>
