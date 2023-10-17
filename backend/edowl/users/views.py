@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from .serilizers import TeacherSerializer, StudentSerializer
+from .serializers import TeacherSerializer, StudentSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from . import models
 
 # Create your views here.
@@ -46,6 +50,30 @@ def teacher_login(request):
    except models.Teacher.DoesNotExist:
       teacherData=None
    if teacherData:
-      return JsonResponse({'bool':True,'is_student':teacherData.is_student,'is_teacher':teacherData.is_teacher,'is_staff':teacherData.is_staff, 'id':teacherData.id})
+      tokens = get_tokens_for_user(teacherData)
+      return JsonResponse({'bool':True,'is_student':teacherData.is_student,'is_teacher':teacherData.is_teacher,'is_staff':teacherData.is_staff, 'id':teacherData.id,'token':tokens})
    else:
       return JsonResponse({'bool':False})
+   
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['email'] = user.email
+        # ...
+
+        return token
+    
+class MyTokenObtainPairView(TokenObtainPairView):
+   serializer_class = TokenObtainPairSerializer
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
