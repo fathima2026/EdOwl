@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useRef, useState, useEffect } from 'react';
 import {faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
+
 import {
   MDBBtn,
   MDBContainer,
@@ -19,7 +22,10 @@ const USER_REGEX = /^[a-z ,.'-]+$/i;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const baseUrl = 'http://127.0.0.1:8000/api/student/'
+
 const Register = () => {
+
+  const navigate = useNavigate();
   
   const userRef = useRef();
   const errRef = useRef();
@@ -103,6 +109,23 @@ useEffect(() => {
         console.log(JSON.stringify(response))
         setSuccess(true);
         
+        if(response.statusText == "Created"){
+        Swal.fire({
+          title: 'Registered Successfully, please login to continue',
+          icon: 'success',
+          toast:true,
+          timer:3000,
+          timerProgressBar: true,
+          showConfirmButton: true,
+          confirmButtonText: 'continue',
+         }).then((result)=>{
+
+          if(result.isConfirmed){
+
+            navigate('/role')
+
+          }})
+           }
         
         
         //clear state and controlled inputs
@@ -110,6 +133,7 @@ useEffect(() => {
         setFirstName('');
         setLastName('');
         setEmail('');
+        setPwd('');
         setMatchPwd('');
     } catch (err) {
         if (!err?.response) {

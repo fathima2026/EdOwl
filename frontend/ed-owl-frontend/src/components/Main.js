@@ -20,6 +20,7 @@ import RequireAuth from './user/RequireAuth'
 import LoginChoice from './user/LoginChoice'
 import Unauthorized from './user/Unauthorized'
 import StudentDashboard from './user/Student/StudentDashboard'
+import AllGames from './user/Games/AllGames'
 
 const Main = () => {
   return (
@@ -43,7 +44,11 @@ const Main = () => {
 
         <Route path = "/student-logout" element={<StudentLogout/>}/>
 
+        <Route element = {<RequireAuth allowedRoles={["teacher","user","student"]}/>} >
 
+        <Route path = "games" element={<AllGames/>}/>
+
+        </Route>
 
         {/* Protect routes */}
 

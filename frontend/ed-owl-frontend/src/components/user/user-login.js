@@ -73,11 +73,14 @@ const Login = () => {
                   const is_teacher = response?.data?.is_teacher;
                   const is_staff = response?.data?.is_staff;
                   const roles = []
+                  
+                  const page = ''
 
                   if(is_student){
                      roles[0] = "student"
                   }else if(is_teacher){
                     roles[0] = "teacher"
+
                   }else if(is_staff){
                     roles[0]="staff"
                   }else{
@@ -89,7 +92,8 @@ const Login = () => {
                   setAuth({ email, pwd, roles, accessToken });
                   setEmail('');
                   setPwd('');
-                  navigate('/student-dashboard')
+                  
+                  navigate('/dashboard')
 
                 
                   }

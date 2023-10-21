@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
     MDBCard,
     MDBCardHeader,
@@ -13,6 +13,7 @@ const Unauthorized = () => {
     const navigate = useNavigate();
 
     const goBack = () => navigate(-1);
+    const goGames = () => navigate('/games');
 
     return (
         // <div className="container" style={{height:'700px', backgroundColor:'white'}}>
@@ -34,6 +35,8 @@ const Unauthorized = () => {
           <MDBCardTitle>Unauthorized</MDBCardTitle>
           <MDBCardText>You do not have access to the requested page</MDBCardText>
           <MDBBtn color='warning' onClick={goBack}>Go Back</MDBBtn>
+          <MDBCardText>Lets play some games till then!</MDBCardText>
+          <MDBBtn color='success' onClick={goGames}>Yes!</MDBBtn>
         </MDBCardBody>
        
       </MDBCard>
