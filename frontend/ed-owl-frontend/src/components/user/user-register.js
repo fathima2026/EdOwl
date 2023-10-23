@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import {faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import {
   MDBBtn,
@@ -15,18 +15,19 @@ import {
   MDBCardBody,
   MDBCardImage,
   MDBInput,
-  MDBIcon,
+  MDBIcon,MDBCheckbox
 
 } from 'mdb-react-ui-kit';
 const USER_REGEX = /^[a-z ,.'-]+$/i;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const baseUrl = 'http://127.0.0.1:8000/api/student/'
+const baseUrl = 'http://127.0.0.1:8000/api/'
 
 const Register = () => {
 
   const navigate = useNavigate();
-  
+  const {role} = useParams();
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -101,7 +102,8 @@ useEffect(() => {
     
       console.log(studentFormData);
 
-      const response = await axios.post(baseUrl,studentFormData)
+      // const response = await axios.post(baseUrl,studentFormData)
+      const response = await axios.post(baseUrl+role+'/',studentFormData)
 
 
         console.log(response?.data);
@@ -306,6 +308,10 @@ useEffect(() => {
                              <FontAwesomeIcon icon={faInfoCircle} />
                              Must match the first password input field.
                          </p>
+
+                         <MDBCheckbox name='flexCheck' value='teacher' id='flexCheckDefault' label='Teacher' />
+                         <MDBCheckbox name='flexCheck' value='student' id='flexCheckChecked' label='Student' defaultChecked />          
+                      
              <MDBBtn onClick={handleSubmit} disabled={!validEmail || !validFirstName || !validLastName || !validPwd || !validMatch ? true : false} className='mb-4' size='lg'>Register</MDBBtn>
  
            </MDBCol>

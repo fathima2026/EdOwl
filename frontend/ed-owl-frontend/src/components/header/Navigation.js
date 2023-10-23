@@ -67,7 +67,7 @@ const Navigation = () => {
 
       <NavDropdown style={{margin:"0 100px"}} className="Main-element tiny-scale" title="User" id="basic-nav-dropdown">
               {studentLoginStatus!='true' && <><NavDropdown.Item componentClass='span' as={Link} to="/role">Login</NavDropdown.Item>
-              <NavDropdown.Item componentClass='span' as={Link} to="/register">Register</NavDropdown.Item></>}
+              <NavDropdown.Item componentClass='span' as={Link} to="/regrole">Register</NavDropdown.Item></>}
               
               <NavDropdown.Item >
               {studentLoginStatus=='true' && <>

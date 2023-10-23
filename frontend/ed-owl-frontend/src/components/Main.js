@@ -21,6 +21,7 @@ import LoginChoice from './user/LoginChoice'
 import Unauthorized from './user/Unauthorized'
 import StudentDashboard from './user/Student/StudentDashboard'
 import AllGames from './user/Games/AllGames'
+import RegisterChoice from './user/RegisterChoice'
 
 const Main = () => {
   return (
@@ -35,10 +36,14 @@ const Main = () => {
         <Route path ="" element = {<Home/>}/>
         
         <Route path = "login/:role" element={<Login/>}/>
+
+        <Route path = "register/:role" element={<Register/>}/>
+
         
         <Route path = "role" element={<LoginChoice/>}/>
         
-        <Route path = "register" element={<Register/>}/>
+        <Route path = "regrole" element={<RegisterChoice/>}/>
+
 
         <Route path='unauthorized' element={<Unauthorized/>}></Route>
 
@@ -58,8 +63,8 @@ const Main = () => {
         
         <Route path = "teacher/edit-module/:module_id" element={<EditCourse/>}/>
         <Route path = "/dashboard" element={<Dashboard/>}/>
-        <Route path = "teacher/courses" element={<MyCourses/>}/>
-        <Route path = "/teacher/add-course" element={<AddCourse/>}/>
+        <Route path = "/teacher/courses" element={<MyCourses/>}/>
+        <Route path = "/teacher/courses/teacher/add-course" element={<AddCourse/>}/>
         <Route path = "/teacher/add-topic/:module_id" element={<AddTopic/>}/>
         <Route path = "/teacher/topic/:module_id" element={<Topics/>}/>
         <Route path = "/teacher/edit-topic/:topic_id" element={<EditTopic/>}/>
