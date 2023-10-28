@@ -93,7 +93,7 @@ const Login = () => {
                   setEmail('');
                   setPwd('');
                   
-                  navigate('/dashboard')
+                  navigate('/'+{roles}+'/dashboard')
 
                 
                   }

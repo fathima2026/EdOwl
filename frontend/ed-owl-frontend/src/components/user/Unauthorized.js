@@ -37,6 +37,7 @@ const Unauthorized = () => {
           <MDBBtn color='warning' onClick={goBack}>Go Back</MDBBtn>
           <MDBCardText>Lets play some games till then!</MDBCardText>
           <MDBBtn color='success' onClick={goGames}>Yes!</MDBBtn>
+          
         </MDBCardBody>
        
       </MDBCard>
