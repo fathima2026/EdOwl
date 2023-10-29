@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from .serializers import TeacherSerializer, StudentSerializer
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import generics
+from django.views.decorators.csrf import csrf_exempt
 
 from . import models
 
@@ -50,8 +51,7 @@ def teacher_login(request):
    except models.Teacher.DoesNotExist:
       teacherData=None
    if teacherData:
-      tokens = get_tokens_for_user(teacherData)
-      return JsonResponse({'bool':True,'is_student':teacherData.is_student,'is_teacher':teacherData.is_teacher,'is_staff':teacherData.is_staff, 'id':teacherData.id,'token':tokens})
+      return JsonResponse({'bool':True,'is_student':teacherData.is_student,'is_teacher':teacherData.is_teacher,'is_staff':teacherData.is_staff, 'id':teacherData.id})
    else:
       return JsonResponse({'bool':False})
    

@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Teacher
+from users.models import Teacher, Student
 
 # Create your models here.
 
@@ -20,3 +20,11 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.title
+    
+class StudentCourseEnrollment(models.Model):
+    course = models.ForeignKey(Module, on_delete=models.CASCADE,related_name='enrolled_courses')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrolled_students')
+    enrolled_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "6. Enrolled courses"

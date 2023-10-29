@@ -10,3 +10,5 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.Student
         fields = ['id','email', 'first_name', 'last_name','password']
+
+

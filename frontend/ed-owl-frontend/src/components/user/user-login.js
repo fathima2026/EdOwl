@@ -88,12 +88,13 @@ const Login = () => {
                   }
 
                   console.log(roles)
-                 
+                  let role = roles[0];
+                  console.log(role)
                   setAuth({ email, pwd, roles, accessToken });
                   setEmail('');
                   setPwd('');
                   
-                  navigate('/'+{roles}+'/dashboard')
+                  navigate('/'+role+'/courses')
 
                 
                   }

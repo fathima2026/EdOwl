@@ -10,3 +10,8 @@ class TopicSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.Topic
         fields = ['id','title', 'module']
+
+class EnrolledModuleSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.StudentCourseEnrollment
+        fields = ['id','course','student','enrolled_time']

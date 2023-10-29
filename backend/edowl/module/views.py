@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
@@ -45,3 +45,29 @@ class ModuleTopicList(generics.ListAPIView):
       module_id=self.kwargs['module_id']
       module = models.Module.objects.get(pk=module_id)
       return models.Topic.objects.filter(module=module)
+
+class Enrollment(generics.ListAPIView):
+   serializer_class = ModuleSerializer
+
+   def get_queryset(self):
+      module_code = self.kwargs['module_code']
+      # module = models.Module.objects.get(pk=module)
+      return models.Module.objects.filter(code=module_code)
+
+class EnrolledModuleList(generics.ListCreateAPIView):
+   queryset = models.StudentCourseEnrollment.objects.all()
+   serializer_class = EnrolledModuleSerializer
+   # permission_classes = [permissions.IsAuthenticated]
+
+class EnrolledModuleDetail(generics.RetrieveUpdateDestroyAPIView):
+   queryset = models.StudentCourseEnrollment.objects.all()
+   serializer_class = EnrolledModuleSerializer
+
+def fetch_enroll_status(request,student_id,course_id):
+   student = models.Student.objects.get(id=student_id)
+   course = models.Module.objects.get(id=course_id)
+   enrollStatus = models.StudentCourseEnrollment.objects.filter(course=course,student=student).count()
+   if enrollStatus == 0:
+      return JsonResponse({'bool':False})
+   else:
+      return JsonResponse({'bool':True})
