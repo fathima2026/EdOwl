@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Sidebar from '../Sidebar';
 import axios from 'axios';
 import {useState} from 'react'
+import Swal from 'sweetalert2'
+
 const baseUrl = 'http://127.0.0.1:8000/api/module/'
 
 const AddCourse = () => {
@@ -41,6 +43,20 @@ const AddCourse = () => {
       
       console.log(response.data)
       event.preventDefault()
+
+  
+        Swal.fire({
+          
+          title: 'Course added successfully',
+          icon: 'success',
+          toast:true,
+          timer:3000,
+          timerProgressBar: true,
+          showConfirmButton: false
+  
+         })
+      
+    
 
       setModuleData({
 

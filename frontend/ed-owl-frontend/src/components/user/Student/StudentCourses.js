@@ -6,6 +6,8 @@ import {Link} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios'
+import Swal from 'sweetalert2'
+
 const baseUrl = 'http://127.0.0.1:8000/api'
 const StudentCourses = () => {
 
@@ -64,7 +66,38 @@ const StudentCourses = () => {
     try{
       axios.get(baseUrl+'/fetch-enroll-status/'+student_id+'/'+course_id).then((response)=>{
         
-        if(r)
+        if(response.data.bool){
+          console.log(response.data.bool);
+          alert("You are already enrolled in this course.");
+        }else{
+
+          const moduleFormData = new FormData();
+
+          moduleFormData.append("course", course_id)
+          moduleFormData.append("student", student_id);
+         
+          
+      
+      
+      
+          try{
+            axios.post(baseUrl+'/enrolled-module/',moduleFormData).then((response)=>{
+              console.log(response)
+              Swal.fire({
+            
+                title: 'Course added successfully',
+                icon: 'success',
+                toast:true,
+                timer:3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+        
+               })
+            })}
+            catch(error){
+              console.log(error)
+            }}
+        
         
 
 
@@ -73,22 +106,7 @@ const StudentCourses = () => {
        console.log(error)
     }
      
-    const moduleFormData = new FormData();
-
-    moduleFormData.append("course", course_id)
-    moduleFormData.append("student", student_id);
    
-    
-
-
-
-    try{
-      axios.post(baseUrl+'/enrolled-module/',moduleFormData).then((response)=>{
-        console.log(response)
-      })}
-      catch(error){
-        console.log(error)
-      }
 
   }
 
@@ -161,7 +179,7 @@ const StudentCourses = () => {
     {moduleData==null && <> <p className="py-4"style={{textAlign:'center'}}>You do not have any courses currently! Please add some courses!</p>
    
     <Button size="sm" style={{width:'30%', margin:'auto'}} variant="primary" onClick={handleShow}>
-        Launch demo modal
+        Add Classroom Code
       </Button>
     {/* <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to="student/add-course" variant="success">Add courses!</Button>{' '} */}
     
