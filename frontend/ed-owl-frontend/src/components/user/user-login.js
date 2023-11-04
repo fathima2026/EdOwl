@@ -94,9 +94,12 @@ const Login = () => {
                   setEmail('');
                   setPwd('');
                   
+                  if(role=="user"){
+                    navigate('/unauthorized')
+                  }else{
                   navigate('/'+role+'/courses')
 
-                
+                  }
                   }
                 else{
                   setErrMsg("Invalid Email or Password")

@@ -23,7 +23,8 @@ import StudentDashboard from './user/Student/StudentDashboard'
 import AllGames from './user/Games/AllGames'
 import RegisterChoice from './user/RegisterChoice'
 import StudentCourses from './user/Student/StudentCourses'
-
+import CourseTopicStudent from './user/Student/CourseTopicStudent'
+import AddAssignment from './user/Teacher/AddAssignment'
 const Main = () => {
   return (
 
@@ -67,6 +68,7 @@ const Main = () => {
         <Route path = "/teacher/courses" element={<MyCourses/>}/>
         <Route path = "/teacher/courses/teacher/add-course" element={<AddCourse/>}/>
         <Route path = "/teacher/add-topic/:module_id" element={<AddTopic/>}/>
+        <Route path = "/teacher/add-assignment/:module_id" element={<AddAssignment/>}/>
         <Route path = "/teacher/topic/:module_id" element={<Topics/>}/>
         <Route path = "/teacher/edit-topic/:topic_id" element={<EditTopic/>}/>
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>
@@ -76,6 +78,7 @@ const Main = () => {
         <Route element={<RequireAuth allowedRoles={["student"]} />}>
          
           <Route path = "/student/courses" element={<StudentCourses/>}/>
+          <Route path = "/student/topic/:module_id" element={<CourseTopicStudent/>}/>
 
           <Route path="student-dashboard" element={<StudentDashboard />} />
         </Route>

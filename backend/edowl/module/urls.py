@@ -24,15 +24,21 @@ urlpatterns = [
    path('enroll/<str:module_code>/',views.Enrollment.as_view()),
 
    #enrolling into the course
-    path('enrolled-module/', views.EnrolledModuleList.as_view()),
+    path('enrolled-module/', views.EnrollModule.as_view()),
  
     
     #fetch weather student enrolled into course already
     path('fetch-enroll-status/<int:student_id>/<int:course_id>',views.fetch_enroll_status),
 
+    #fetch students courses
+    path('student-module/<int:student_id>/', views.EnrolledModuleList.as_view()),
 
-    path('student-module/<int:student_id>/', views.EnrolledModuleDetail.as_view()),
+   #FETCH ENROLLED STUDENTS OF A SPECIFIC COURSE
 
-   
+     path('fetch-enroll-students/<int:course_id>',views.EnrolledStudentList.as_view()),
 
+   #post new assignment    
+     path('assignment/', views.AssignmentList.as_view()),
+
+     path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
 ]

@@ -28,3 +28,26 @@ class StudentCourseEnrollment(models.Model):
 
     class Meta:
         verbose_name_plural = "6. Enrolled courses"
+
+class Assignment(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.CharField(max_length=None,default='')
+    file = models.FileField(upload_to='files/',null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
+    total_mark = models.IntegerField(default=50)
+    module = models.ForeignKey(Module, on_delete=models.CASCADE,related_name='assignment')
+    created_time = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "7. Assignments"
+
+class AssignmentSubmission(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE,related_name='submitted_assignments')
+    file = models.FileField(blank=False)
+    completed_time = models.DateTimeField(auto_now=True)
+    marks = models.DecimalField(max_digits=5, decimal_places=2)
+    remarks = models.CharField(max_length=None)
+    
+    class Meta :
+        verbose_name = "8. Submitted assignments"
+

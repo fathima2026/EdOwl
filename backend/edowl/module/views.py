@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
+from users.serializers import StudentSerializer
 # Create your views here.
 
 # Create your views here.
@@ -24,6 +25,15 @@ class TopicList(generics.ListCreateAPIView):
 class TopicDetailView(generics.RetrieveUpdateDestroyAPIView):
    queryset = models.Topic.objects.all()
    serializer_class = TopicSerializer
+
+class AssignmentList(generics.ListCreateAPIView):
+   queryset = models.Assignment.objects.all()
+   serializer_class = AssignmentSerializer
+   # permission_classes = [permissions.IsAuthenticated]
+
+class AssignmentDetail(generics.RetrieveUpdateDestroyAPIView):
+   queryset = models.Assignment.objects.all()
+   serializer_class = AssignmentSerializer
 #returns specific module for each teacher
 
 class TeacherModuleList(generics.ListCreateAPIView):
@@ -53,11 +63,36 @@ class Enrollment(generics.ListAPIView):
       module_code = self.kwargs['module_code']
       # module = models.Module.objects.get(pk=module)
       return models.Module.objects.filter(code=module_code)
-
-class EnrolledModuleList(generics.ListCreateAPIView):
+   
+class EnrollModule(generics.ListCreateAPIView):
    queryset = models.StudentCourseEnrollment.objects.all()
    serializer_class = EnrolledModuleSerializer
    # permission_classes = [permissions.IsAuthenticated]
+
+class EnrolledModuleList(generics.ListCreateAPIView):
+   serializer_class = ModuleSerializer
+
+   def get_queryset(self):
+      student_id=self.kwargs['student_id']
+      student = models.Student.objects.get(pk=student_id)
+      modules = models.StudentCourseEnrollment.objects.filter(student=student)
+      modulesarray = [];
+      for val in modules:
+       modulesarray.append(val.course)
+      return modulesarray
+   
+
+class EnrolledStudentList(generics.ListAPIView):
+   serializer_class = StudentSerializer
+      
+   def get_queryset(self):
+      course_id = self.kwargs['course_id']
+      course = models.Module.objects.get(id=course_id)
+      data = models.StudentCourseEnrollment.objects.filter(course=course)
+      studentsarray = []
+      for val in data:
+         studentsarray.append(val.student)
+      return studentsarray
 
 class EnrolledModuleDetail(generics.RetrieveUpdateDestroyAPIView):
    queryset = models.StudentCourseEnrollment.objects.all()
@@ -71,3 +106,4 @@ def fetch_enroll_status(request,student_id,course_id):
       return JsonResponse({'bool':False})
    else:
       return JsonResponse({'bool':True})
+

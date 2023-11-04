@@ -100,7 +100,7 @@ const StudentCourses = () => {
         
         
 
-
+          
       })
     }catch(error){
        console.log(error)
@@ -116,21 +116,21 @@ const StudentCourses = () => {
 
   useEffect(() =>{ 
  
-    setModuleData(null); 
+   
+  //  http://localhost:8000/api/student-module/2/
+    try{
+     axios.get(baseUrl+'/student-module/'+id).then((response)=>{
 
-    // try{
-    //  axios.get(baseUrl+'/teacher-module/'+id).then((response)=>{
+      setModuleData(response.data); 
 
-     
+     });}
+     catch(error){
+      console.log(error)
+     }
 
-  //    });}
-  //    catch(error){
-  //     console.log(error)
-  //    }
+   },[]);
 
-  //  },[]);
-
-  },[]);
+ 
 
 
   const studentLoginStatus = localStorage.getItem('studentLoginStatus')
@@ -178,9 +178,7 @@ const StudentCourses = () => {
 
     {moduleData==null && <> <p className="py-4"style={{textAlign:'center'}}>You do not have any courses currently! Please add some courses!</p>
    
-    <Button size="sm" style={{width:'30%', margin:'auto'}} variant="primary" onClick={handleShow}>
-        Add Classroom Code
-      </Button>
+  
     {/* <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to="student/add-course" variant="success">Add courses!</Button>{' '} */}
     
     </>}
@@ -196,9 +194,8 @@ const StudentCourses = () => {
         <Card.Text>
           {module.description}
         </Card.Text>
-        <Card.Link style={{ color:'green' }} as={Link} to={`/teacher/topic/`+module.id}>View Module</Card.Link>
-        <Card.Link style={{ color:'blue' }} as={Link} to={`/teacher/edit-module/`+module.id}>EDIT Module</Card.Link>
-        <Card.Link  style={{ color:'red' }} as={Link} to={`/teacher/delete-module/`+module.id}>Delete Module</Card.Link>
+        <Card.Link style={{ color:'green' }} as={Link} to={`/student/topic/`+module.id}>View Module</Card.Link>
+        <Card.Link style={{ color:'blue' }} as={Link} to={`/teacher/edit-module/`+module.id}>Assignments</Card.Link>
        </Card.Body>
       </Card>
       
@@ -210,8 +207,9 @@ const StudentCourses = () => {
         
       </div>
     </div>
-    <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to="teacher/add-course" variant="success">Add courses!</Button>{' '}
-  </section>
+    <Button size="sm" style={{width:'30%', margin:'auto'}} variant="primary" onClick={handleShow}>
+        Add Classroom Code
+      </Button>  </section>
     
   
   </div>
