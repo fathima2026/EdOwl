@@ -40,5 +40,8 @@ urlpatterns = [
    #post new assignment    
      path('assignment/', views.AssignmentList.as_view()),
 
+   #fetch all assignments for a module
+     path('module-assigment/<int:module_id>/', views.ModuleAssignmentList.as_view()),
+
      path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
 ]

@@ -107,3 +107,10 @@ def fetch_enroll_status(request,student_id,course_id):
    else:
       return JsonResponse({'bool':True})
 
+class ModuleAssignmentList(generics.ListAPIView):
+   serializer_class = AssignmentSerializer
+
+   def get_queryset(self):
+      module_id=self.kwargs['module_id']
+      module = models.Module.objects.get(pk=module_id)
+      return models.Assignment.objects.filter(module=module)

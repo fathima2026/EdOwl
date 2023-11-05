@@ -31,21 +31,33 @@ const AddAssignment = () => {
     })
   }
 
+  const handleFileChange=(event) => {
+    console.log(event.target.name,event.target.value)
+    setAssignmentData({
+      ...assignmentData,
+      [event.target.name]:event.target.files[0]
+    })
+  }
+
   const submitForm=(event) => {
     const assignmentFormData = new FormData();
     
 
     assignmentFormData.append("title", assignmentData.title)
     assignmentFormData.append("description", assignmentData.description)
-    assignmentFormData.append("file", assignmentData.file)
-    assignmentFormData.append("image", assignmentData.image)
-    assignmentFormData.append("total_mark", assignmentData.image)
+    assignmentFormData.append("file", assignmentData.file,assignmentData.file.name)
+    assignmentFormData.append("image", assignmentData.image,assignmentData.image.name)
+    assignmentFormData.append("total_mark", assignmentData.total_mark)
     assignmentFormData.append("module", module_id)
 
     event.preventDefault()
     
-    try{
-    axios.post(baseUrl,assignmentFormData).then((response)=>{
+try{
+    axios.post(baseUrl,assignmentFormData,{
+      headers:{
+        'content-type':'multipart/form-data'
+      }
+    }).then((response)=>{
       
       console.log(response.data)
       event.preventDefault()
@@ -77,10 +89,11 @@ const AddAssignment = () => {
   
 
     });
-    }) }catch(e){
-     console.log(e);
-     setAssignmentData({status:'e'})
-    }
+    })}catch(err) {
+      event.preventDefault()
+
+      console.log(err);
+    }; 
   }
   return (
     <div className="row">
@@ -99,11 +112,11 @@ const AddAssignment = () => {
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Document</Form.Label>
-        <Form.Control onChange={handleChange} value={assignmentData.file} type="file" placeholder="Upload Document" name="file"/>
+        <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Document" name="file"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Image</Form.Label>
-        <Form.Control onChange={handleChange} value={assignmentData.image} type="file" placeholder="Upload Image" name="image"/>
+        <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Image" name="image"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Total mark</Form.Label>
