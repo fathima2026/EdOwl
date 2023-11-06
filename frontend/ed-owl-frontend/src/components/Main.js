@@ -25,6 +25,7 @@ import RegisterChoice from './user/RegisterChoice'
 import StudentCourses from './user/Student/StudentCourses'
 import CourseTopicStudent from './user/Student/CourseTopicStudent'
 import AddAssignment from './user/Teacher/AddAssignment'
+import EditAssignment from './user/Teacher/EditAssignment'
 const Main = () => {
   return (
 
@@ -69,6 +70,7 @@ const Main = () => {
         <Route path = "/teacher/courses/teacher/add-course" element={<AddCourse/>}/>
         <Route path = "/teacher/add-topic/:module_id" element={<AddTopic/>}/>
         <Route path = "/teacher/add-assignment/:module_id" element={<AddAssignment/>}/>
+        <Route path = "/teacher/edit-assignment/:assignment_id" element={<EditAssignment/>}/>
         <Route path = "/teacher/topic/:module_id" element={<Topics/>}/>
         <Route path = "/teacher/edit-topic/:topic_id" element={<EditTopic/>}/>
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>

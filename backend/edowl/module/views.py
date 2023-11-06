@@ -114,3 +114,4 @@ class ModuleAssignmentList(generics.ListAPIView):
       module_id=self.kwargs['module_id']
       module = models.Module.objects.get(pk=module_id)
       return models.Assignment.objects.filter(module=module)
+   

@@ -15,6 +15,7 @@ const Topics = () => {
  
   const[topicData, setTopicData]=useState([]);
   const[studentList, setStudentList]=useState([]);
+  const[assignmentList, setAssignmentList]=useState([]);
   const[totalResult, setTotalResult]=useState(0);
   const {module_id} = useParams()
 
@@ -30,6 +31,16 @@ const Topics = () => {
      catch(error){
       console.log(error)
      }
+
+     try{
+      axios.get(baseUrl+'/module-assignment/'+module_id).then((response)=>{
+ 
+       setAssignmentList(response.data); 
+ 
+      });}
+      catch(error){
+       console.log(error)
+      }
 
               
      try{
@@ -88,7 +99,7 @@ const Topics = () => {
    })
   }
   return (
-    <div className="row">
+    <div className="row" style={{marginBottom:'20px'}}>
     <aside className='col-3'>
     <Sidebar/>
     </aside>
@@ -97,7 +108,7 @@ const Topics = () => {
    
 
     <Tabs
-      defaultActiveKey="profile"
+      defaultActiveKey="home"
       id="justify-tab-example"
       className="mb-3"
       justify
@@ -161,8 +172,30 @@ const Topics = () => {
       </Tab>
       <Tab eventKey="Assignments" title="Assignments">
        <p>Post an Assignment</p>
-       <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to={`/teacher/add-assignment/`+module_id} variant="success">Add Assignment!</Button>{' '}
+       
+       <Button size="sm" style={{width:'30%', margin:'auto',marginBottom:'20px'}} as={Link} to={`/teacher/add-assignment/`+module_id} variant="warning">Add Assignment!</Button>{' '}
+        
+      <div>
+    
+
+    {assignmentList.map((assignment,index)=>
+         <Card  border="warning" style={{marginBottom:'20px'}}>
+            <Card.Body>
+        <Card.Subtitle className="mb-2 text-muted">{assignment.title}</Card.Subtitle>
+        <Card.Text>
+          {assignment.description}
+        </Card.Text>
+        <Card.Link style={{color:'green'}} href="#">Edit Assignment</Card.Link>
+        <Card.Link style={{color:''}} href="#">View Assignment</Card.Link>
+        <Card.Link style={{color:'red'}} href="#">Delete Assignment</Card.Link>
+      </Card.Body>
+       </Card>
+     )}
+      </div>
+      
+      
       </Tab>
+
       <Tab eventKey="contact" title="Contact" disabled>
         Tab content for Contact
       </Tab>
