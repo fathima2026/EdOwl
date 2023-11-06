@@ -125,17 +125,20 @@ const EditAssignment = () => {
         <Form.Label>Assignment Title</Form.Label>
         <Form.Control onChange={handleChange} value={assignmentData.title} type="text" placeholder="Enter Assignment Title" name="title" required/>
       </Form.Group>
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-3"controlId="exampleForm.ControlTextarea1">
         <Form.Label>Assignment Description</Form.Label>
-        <Form.Control onChange={handleChange} value={assignmentData.description} type="text" placeholder="Enter Assignment Title" name="description"/>
+        <Form.Control as="textarea" rows={3} onChange={handleChange} value={assignmentData.description} type="text" placeholder="Enter Assignment Title" name="description"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Document</Form.Label>
-        <Form.Control onChange={handleFileChange} value={assignmentData.file} type="file" placeholder="Upload Document" name="file"/>
+        <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Document" name="file"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Image</Form.Label>
-        <Form.Control onChange={handleFileChange} type="file" value={assignmentData.image} placeholder="Upload Image" name="image"/>
+        <Form.Control onChange={handleFileChange} type="file"  placeholder="Upload Image" name="image"/>
+        
+          <img src={assignmentData.image} alt="" /> 
+       
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Total mark</Form.Label>

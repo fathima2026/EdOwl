@@ -56,7 +56,46 @@ const Topics = () => {
 
 
    },[]);
-
+   const handleAssignmentDelete = (assignment_id) => {
+    Swal.fire({
+     title: 'Delete Assignment',
+     text: 'Are you sure you want to delete',
+     icon: 'info',
+     confirmButtonText: 'continue',
+     showCancelButton: true
+    }).then((result)=>{
+ 
+     if(result.isConfirmed){
+ 
+       try {
+         
+         axios.delete(baseUrl + '/assignment/'+assignment_id + '/')
+         .then((res)=>{
+           
+           Swal.fire('success', 'assignment deleted successfully');
+          
+           try{
+             axios.get(baseUrl+'/module-assignment/'+module_id).then((response)=>{
+        
+              setAssignmentList(response.data); 
+        
+             });}
+             catch(error){
+              console.log(error)
+             }
+ 
+    
+         
+         
+         });
+       }catch(error){
+         Swal.fire('error', 'Error deleting')
+       }
+     }else{
+       Swal.fire('error', 'Error deleting')
+     }
+    })
+   }
   const handleDelete = (topic_id) => {
    Swal.fire({
     title: 'Delete Topic',
@@ -187,7 +226,7 @@ const Topics = () => {
         </Card.Text>
         <Card.Link style={{color:'green'}} as={Link} to={`/teacher/edit-assignment/`+assignment.id}>Edit Assignment</Card.Link>
         <Card.Link style={{color:''}} href="#">View Assignment</Card.Link>
-        <Card.Link style={{color:'red'}} href="#">Delete Assignment</Card.Link>
+        <Card.Link style={{color:'red'}} onClick={()=>handleAssignmentDelete(assignment.id)} href="#">Delete Assignment</Card.Link>
       </Card.Body>
        </Card>
      )}
