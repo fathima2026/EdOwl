@@ -1,4 +1,13 @@
+
 import React from 'react'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Sidebar from '../Sidebar';
+import axios from 'axios';
+import {useState,useEffect} from 'react'
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
+const baseUrl = 'http://127.0.0.1:8000/api'
 
 const EditAssignment = () => {
     const [assignmentData, setAssignmentData] = useState({
@@ -19,7 +28,7 @@ const EditAssignment = () => {
         try{
          axios.get(baseUrl+'/teacher-assignment-detail/'+assignment_id).then((response)=>{
     
-          setModuleData( 
+          setAssignmentData( 
               {
                title: response.data.title,
                description: response.data.description,
@@ -62,7 +71,7 @@ const EditAssignment = () => {
         assignmentFormData.append("file", assignmentData.file,assignmentData.file.name)
         assignmentFormData.append("image", assignmentData.image,assignmentData.image.name)
         assignmentFormData.append("total_mark", assignmentData.total_mark)
-        assignmentFormData.append("module", module_id)
+        assignmentFormData.append("module", assignmentData.module)
     
         event.preventDefault()
         
@@ -88,7 +97,7 @@ const EditAssignment = () => {
       
              })
           }
-          setModuleData({
+          setAssignmentData({
     
             title: '',
             description: '',
@@ -102,7 +111,7 @@ const EditAssignment = () => {
         });
         }) }catch(e){
          console.log(e);
-         setModuleData({status:'e'})
+         setAssignmentData({status:'e'})
         }
       }
   return (
@@ -122,11 +131,11 @@ const EditAssignment = () => {
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Document</Form.Label>
-        <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Document" name="file"/>
+        <Form.Control onChange={handleFileChange} value={assignmentData.file} type="file" placeholder="Upload Document" name="file"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Image</Form.Label>
-        <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Image" name="image"/>
+        <Form.Control onChange={handleFileChange} type="file" value={assignmentData.image} placeholder="Upload Image" name="image"/>
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Total mark</Form.Label>

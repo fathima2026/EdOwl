@@ -185,7 +185,7 @@ const Topics = () => {
         <Card.Text>
           {assignment.description}
         </Card.Text>
-        <Card.Link style={{color:'green'}} href="#">Edit Assignment</Card.Link>
+        <Card.Link style={{color:'green'}} as={Link} to={`/teacher/edit-assignment/`+assignment.id}>Edit Assignment</Card.Link>
         <Card.Link style={{color:''}} href="#">View Assignment</Card.Link>
         <Card.Link style={{color:'red'}} href="#">Delete Assignment</Card.Link>
       </Card.Body>
