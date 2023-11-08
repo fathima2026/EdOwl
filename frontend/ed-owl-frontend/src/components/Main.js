@@ -26,6 +26,8 @@ import StudentCourses from './user/Student/StudentCourses'
 import CourseTopicStudent from './user/Student/CourseTopicStudent'
 import AddAssignment from './user/Teacher/AddAssignment'
 import EditAssignment from './user/Teacher/EditAssignment'
+import StudentAssignment from './user/Student/StudentAssignment'
+import ViewAssignment from './user/Teacher/ViewAssignment'
 const Main = () => {
   return (
 
@@ -71,6 +73,7 @@ const Main = () => {
         <Route path = "/teacher/add-topic/:module_id" element={<AddTopic/>}/>
         <Route path = "/teacher/add-assignment/:module_id" element={<AddAssignment/>}/>
         <Route path = "/teacher/edit-assignment/:assignment_id" element={<EditAssignment/>}/>
+        <Route path = "/teacher/assignment/:assignment_id" element={<ViewAssignment/>}/>
         <Route path = "/teacher/topic/:module_id" element={<Topics/>}/>
         <Route path = "/teacher/edit-topic/:topic_id" element={<EditTopic/>}/>
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>
@@ -81,6 +84,7 @@ const Main = () => {
          
           <Route path = "/student/courses" element={<StudentCourses/>}/>
           <Route path = "/student/topic/:module_id" element={<CourseTopicStudent/>}/>
+          <Route path = "/student/assignment/:assignment_id" element={<StudentAssignment/>}/>
 
           <Route path="student-dashboard" element={<StudentDashboard />} />
         </Route>

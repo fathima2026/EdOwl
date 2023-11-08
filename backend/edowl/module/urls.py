@@ -42,7 +42,8 @@ urlpatterns = [
 
    #fetch all assignments for a module
      path('module-assignment/<int:module_id>/', views.ModuleAssignmentList.as_view()),
-
+     
+    #assignment detail
      path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
      path('teacher-assignment-detail/<int:pk>', views.AssignmentDetail.as_view()),
 

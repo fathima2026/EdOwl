@@ -177,9 +177,16 @@
       monospace;
   }
   
-  ::-webkit-scrollbar{
+  /* ::-webkit-scrollbar{
     display:none
-  }
+  } */
+
+
+    button#submit-assignment:hover {
+      transform: scale(1.2);
+      transition-duration: 0.5s;
+    }
+  
   
   .font{
     scroll-behavior: smooth;

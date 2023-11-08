@@ -143,7 +143,7 @@ const Topics = () => {
     <Sidebar/>
     </aside>
     
-    <section className='col-9' style={{backgroundColor: '#eee'}}>
+    <section className='col-8' style={{backgroundColor: '#eee'}}>
    
 
     <Tabs
@@ -214,7 +214,7 @@ const Topics = () => {
        
        <Button size="sm" style={{width:'30%', margin:'auto',marginBottom:'20px'}} as={Link} to={`/teacher/add-assignment/`+module_id} variant="warning">Add Assignment!</Button>{' '}
         
-      <div>
+      <div style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'600px'}}>
     
 
     {assignmentList.map((assignment,index)=>
@@ -225,7 +225,7 @@ const Topics = () => {
           {assignment.description}
         </Card.Text>
         <Card.Link style={{color:'green'}} as={Link} to={`/teacher/edit-assignment/`+assignment.id}>Edit Assignment</Card.Link>
-        <Card.Link style={{color:''}} href="#">View Assignment</Card.Link>
+        <Card.Link as={Link} to={`/teacher/assignment/`+assignment.id} href="#">View Assignment</Card.Link>
         <Card.Link style={{color:'red'}} onClick={()=>handleAssignmentDelete(assignment.id)} href="#">Delete Assignment</Card.Link>
       </Card.Body>
        </Card>
