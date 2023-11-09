@@ -14,12 +14,16 @@ class TopicSerializer(serializers.ModelSerializer):
 class EnrolledModuleSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.StudentCourseEnrollment
-        fields = ['id','course','student','enrolled_time']
+        fields = ['id','course','student','enrolled_time','enrolled_date']
 
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.Assignment
-        fields = ['id','title','description','file','image','total_mark','module','created_time']
+        fields = ['id','title','description','file','image','total_mark','module','created_time','created_date']
+
+class AssignmentSubmissionSerializer(serializers.ModelSerializer):
+    class Meta :
+        fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks']
 
 
 

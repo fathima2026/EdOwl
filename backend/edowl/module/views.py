@@ -114,4 +114,12 @@ class ModuleAssignmentList(generics.ListAPIView):
       module_id=self.kwargs['module_id']
       module = models.Module.objects.get(pk=module_id)
       return models.Assignment.objects.filter(module=module)
-   
+
+def fetch_submission_status(request,student_id,assignment_id):
+   student = models.Student.objects.get(id=student_id)
+   assignment = models.Assignment.objects.get(id=assignment_id)
+   submissionStatus = models.AssignmentSubmission.objects.filter(assignment=assignment,student=student).count()
+   if submissionStatus == 0:
+      return JsonResponse({'bool':False})
+   else:
+      return JsonResponse({'bool':True})

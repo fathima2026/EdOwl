@@ -23,8 +23,10 @@ class Topic(models.Model):
     
 class StudentCourseEnrollment(models.Model):
     course = models.ForeignKey(Module, on_delete=models.CASCADE,related_name='enrolled_courses')
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrolled_students')
-    enrolled_time = models.DateTimeField(auto_now_add=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='enrolled_students')    
+    enrolled_time = models.TimeField(auto_now=True)
+    enrolled_date = models.DateField(auto_now=True)
+
 
     class Meta:
         verbose_name_plural = "6. Enrolled courses"
@@ -36,15 +38,18 @@ class Assignment(models.Model):
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     total_mark = models.IntegerField(default=50)
     module = models.ForeignKey(Module, on_delete=models.CASCADE,related_name='assignment')
-    created_time = models.DateTimeField(auto_now=True)
+    created_time = models.TimeField(auto_now=True)
+    created_date = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "7. Assignments"
 
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE,related_name='submitted_assignments')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     file = models.FileField(blank=False)
-    completed_time = models.DateTimeField(auto_now=True)
+    completed_time = models.TimeField(auto_now=True)
+    completed_date = models.DateField(auto_now=True)
     marks = models.DecimalField(max_digits=5, decimal_places=2)
     remarks = models.CharField(max_length=None)
     
