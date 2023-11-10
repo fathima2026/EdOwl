@@ -23,6 +23,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
 class AssignmentSubmissionSerializer(serializers.ModelSerializer):
     class Meta :
+        model = models.AssignmentSubmission
         fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks']
 
 

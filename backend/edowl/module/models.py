@@ -50,8 +50,8 @@ class AssignmentSubmission(models.Model):
     file = models.FileField(blank=False)
     completed_time = models.TimeField(auto_now=True)
     completed_date = models.DateField(auto_now=True)
-    marks = models.DecimalField(max_digits=5, decimal_places=2)
-    remarks = models.CharField(max_length=None)
+    marks = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+    remarks = models.CharField(max_length=None,null=True,blank=True)
     
     class Meta :
         verbose_name = "8. Submitted assignments"

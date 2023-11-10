@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Sidebar from '../Sidebar';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import {useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom';
@@ -12,29 +13,96 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 const baseUrl = 'http://127.0.0.1:8000/api'
 const StudentAssignment = () => {
- 
-    
         
-        // const docs = [
+        const [show, setShow] = useState(false);
 
-        //   { uri: require("") }, // Local File
-       
-        // ];
-      
-      
-      
+        const handleShow = () => setShow(true);
 
-        const [assignmentData, setAssignmentData] = useState({
+        const student_id = localStorage.getItem('id')
+        const [assignmentSubmissionData, setAssignmentSubmissionData] = useState({
   
+            assignment: '',
+            student: '',
+            file: '',
+        
+          });
+
+          const [assignmentData, setAssignmentData] = useState({
+           
             title: '',
             description: '',
             file: '',
-            image: '',
+            image:'',
             total_mark:'',
             created_time:'',
             module:''
         
           });
+
+          
+        const handleFileChange=(event) => {
+          console.log(event.target.name,event.target.value)
+          setAssignmentSubmissionData({
+            ...assignmentSubmissionData,
+            [event.target.name]:event.target.files[0]
+          })
+        }
+
+        const handleClose = (event) => {          
+        
+          setShow(false);
+      
+          if(assignmentSubmissionData.file){
+          
+            try{
+              axios.get(baseUrl+'/fetch-submission-status/'+student_id+'/'+assignment_id).then((response)=>{
+                
+                if(response.data.bool){
+                  console.log(response.data.bool);
+                  alert("You have already submitted this assignment");
+                }else{
+        
+                  const assignmentSubmitFormData = new FormData();
+        
+                  assignmentSubmitFormData.append("assignment", assignment_id)
+                  assignmentSubmitFormData.append("student", student_id);
+                  assignmentSubmitFormData.append("file",assignmentSubmissionData.file,assignmentSubmissionData.file.name);
+                 
+                  try{
+                    axios.post(baseUrl+'/submit-assignment/',assignmentSubmitFormData).then((response)=>{
+                      console.log(response)
+                      Swal.fire({
+                    
+                        title: 'Submitted Successfully',
+                        icon: 'success',
+                        toast:true,
+                        timer:3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                
+                       })
+                    })}
+                    catch(error){
+                      console.log(error)
+                    }}
+                })
+            }catch(error){
+               console.log(error)
+            }
+             
+           
+        
+          }     
+          else{
+            
+              alert("Submit the file")
+          
+          }
+        
+          }
+     
+      
+      
           
             const {assignment_id} = useParams();
           
@@ -74,7 +142,7 @@ const StudentAssignment = () => {
            <section style={{textAlign:'left'}}>
               <Card style={{ height: '350px' }}>
                <Card.Body>
-              <Card.Title style={{display:'block'}}>Title: {assignmentData.title} <span style={{float:'right'}}><button id="submit-assignment"style={{borderRadius:'5px',backgroundColor:'#FFDA33'}}>Submit now</button></span></Card.Title>
+              <Card.Title style={{display:'block'}}>Title: {assignmentData.title} <span style={{float:'right'}}><button onClick={handleShow} id="submit-assignment"style={{borderRadius:'5px',backgroundColor:'#FFDA33'}}>Submit now</button></span></Card.Title>
               <hr />
             <Card.Subtitle style={{color:'green'}}className="mb-2">Date posted : {assignmentData.created_time}</Card.Subtitle>
             <Card.Subtitle className="mb-2">Total marks : {assignmentData.total_mark}</Card.Subtitle>
@@ -92,7 +160,34 @@ const StudentAssignment = () => {
 
           </Card.Body>
         </Card>
-
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+          <Form.Group className="mb-3">
+          <Form.Label>Document</Form.Label>
+          <Form.Control onChange={handleFileChange} type="file" placeholder="Upload Document" name="file"/>
+          </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Example textarea</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button size="sm" style={{width:'30%', margin:'auto'}} variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button size="sm" style={{width:'30%', margin:'auto'}} variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
         
 
          {/* <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} />; */}

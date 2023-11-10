@@ -22,9 +22,23 @@ const ViewAssignment = () => {
         image: '',
         total_mark:'',
         created_time:'',
+        created_date:'',
         module:''
     
       });
+
+      const [submissionsData, setSubmissionsData] = useState({
+  
+        student: '',
+        file: '',
+        completed_time: '',
+        completed_date: '',
+        marks:'',
+        remarks:''
+    
+      });
+
+    
       
         const {assignment_id} = useParams();
 
@@ -32,7 +46,12 @@ const ViewAssignment = () => {
       
           try{
            axios.get(baseUrl+'/teacher-assignment-detail/'+assignment_id).then((response)=>{
-      
+
+            let d = new Date(response.data.created_date)
+            let date = d.toLocaleDateString();
+            let t = new Date(response.data.created_time);
+            const time = new Date(response.data.created_time).toLocaleTimeString('en',
+                 { timeStyle: 'short', hour12: false, timeZone: 'UTC' })
             setAssignmentData( 
                 {
                  title: response.data.title,
@@ -40,7 +59,8 @@ const ViewAssignment = () => {
                  file: response.data.file,
                  image:response.data.image,
                  total_mark:response.data.total_mark,
-                 created_time:response.data.created_time,
+                 created_time:time,
+                 created_date:date,
                  module:response.data.module
                 }
 
@@ -80,12 +100,12 @@ const ViewAssignment = () => {
            <Card.Body>
           <Card.Title>Title: {assignmentData.title}</Card.Title>
           <hr />
-        <Card.Subtitle style={{color:'green'}}className="mb-2">Date posted : {assignmentData.created_time}</Card.Subtitle>
+        <Card.Subtitle style={{color:'green'}}className="mb-2">Date and Time posted : {assignmentData.created_date}, {assignmentData.created_time}</Card.Subtitle>
+        
         <Card.Subtitle className="mb-2">Total marks : {assignmentData.total_mark}</Card.Subtitle>
 
         <hr />
         <Card.Subtitle className="mb-2">Description : </Card.Subtitle>
-        <Card.Text>{extension}</Card.Text>
         <Card.Text>
          {assignmentData.description}
         </Card.Text>
@@ -110,7 +130,16 @@ const ViewAssignment = () => {
        </section>
       </Tab>
       <Tab eventKey="Submissions" title="Submissions">
-        Tab content for Profile
+      <Card border="success" style={{  }}>
+        <Card.Header>Header</Card.Header>
+        <Card.Body>
+          <Card.Title>Success Card Title</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+        </Card.Body>
+      </Card>
       </Tab>
       <Tab eventKey="Pending" title="Pending" disabled>
         Tab content for Contact

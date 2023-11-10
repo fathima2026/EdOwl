@@ -51,6 +51,14 @@ urlpatterns = [
      #assignment fetch weather already submitted
 
     path('fetch-submission-status/<int:student_id>/<int:assignment_id>',views.fetch_submission_status),
+    
+    #submit assignment
+
+    path('submit-assignment/', views.AssignmentSubmissionList.as_view()),
+
+    #Fetch all submissions for an assignment
+    path('assignment-submissions/<int:assignment_id>/', views.SubmissionAssignment.as_view()),
+
 
 
 ]

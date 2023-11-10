@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
@@ -123,3 +123,16 @@ def fetch_submission_status(request,student_id,assignment_id):
       return JsonResponse({'bool':False})
    else:
       return JsonResponse({'bool':True})
+
+
+class AssignmentSubmissionList(generics.ListCreateAPIView):
+   queryset = models.AssignmentSubmission.objects.all()
+   serializer_class = AssignmentSubmissionSerializer
+
+class SubmissionAssignment(generics.ListAPIView):
+   serializer_class = AssignmentSubmissionSerializer
+
+   def get_queryset(self):
+      assignment_id=self.kwargs['assignment_id']
+      assignment = models.Assignment.objects.get(pk=assignment_id)
+      return models.AssignmentSubmission.objects.filter(assignment=assignment)
