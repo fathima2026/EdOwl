@@ -59,6 +59,10 @@ urlpatterns = [
     #Fetch all submissions for an assignment
     path('assignment-submissions/<int:assignment_id>/', views.SubmissionAssignment.as_view()),
 
+    #fetch individual submissions
+
+    path('submissions/<int:pk>/', views.SubmissionDetail.as_view()),
+
 
 
 ]

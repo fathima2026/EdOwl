@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer,AssignmentAccessSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
@@ -130,9 +130,15 @@ class AssignmentSubmissionList(generics.ListCreateAPIView):
    serializer_class = AssignmentSubmissionSerializer
 
 class SubmissionAssignment(generics.ListAPIView):
-   serializer_class = AssignmentSubmissionSerializer
+   serializer_class = AssignmentAccessSerializer
 
    def get_queryset(self):
       assignment_id=self.kwargs['assignment_id']
       assignment = models.Assignment.objects.get(pk=assignment_id)
       return models.AssignmentSubmission.objects.filter(assignment=assignment)
+   
+
+
+class SubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
+   queryset = models.AssignmentSubmission.objects.all()
+   serializer_class = AssignmentSubmissionSerializer

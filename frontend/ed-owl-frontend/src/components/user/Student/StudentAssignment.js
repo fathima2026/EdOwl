@@ -17,7 +17,7 @@ const StudentAssignment = () => {
         const [show, setShow] = useState(false);
 
         const handleShow = () => setShow(true);
-
+        const {assignment_id} = useParams();
         const student_id = localStorage.getItem('id')
         const [assignmentSubmissionData, setAssignmentSubmissionData] = useState({
   
@@ -56,7 +56,7 @@ const StudentAssignment = () => {
           
             try{
               axios.get(baseUrl+'/fetch-submission-status/'+student_id+'/'+assignment_id).then((response)=>{
-                
+              
                 if(response.data.bool){
                   console.log(response.data.bool);
                   alert("You have already submitted this assignment");
@@ -104,7 +104,7 @@ const StudentAssignment = () => {
       
       
           
-            const {assignment_id} = useParams();
+        
           
             useEffect(() =>{ 
           

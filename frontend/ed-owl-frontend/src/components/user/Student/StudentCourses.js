@@ -143,7 +143,7 @@ const StudentCourses = () => {
     <Sidebar/>
     </aside>
     
-    <section className='col-8' style={{backgroundColor: '#eee'}}>
+    <section className='col-8' style={{backgroundColor: 'white',height:'800px',overflowX:'hidden',overflowY:'auto',overflow:'auto'}}>
     <div className="container py-5">
     <div className="row">
     

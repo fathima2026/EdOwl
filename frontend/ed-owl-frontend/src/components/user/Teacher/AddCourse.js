@@ -33,7 +33,7 @@ const AddCourse = () => {
 
     moduleFormData.append("title", moduleData.title)
     moduleFormData.append("description", moduleData.description)
-    moduleFormData.append("teacher", 1)
+    moduleFormData.append("teacher", localStorage.getItem('id'));
     moduleFormData.append("code", code)
 
     event.preventDefault()

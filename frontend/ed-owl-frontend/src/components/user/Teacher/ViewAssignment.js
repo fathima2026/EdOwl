@@ -10,7 +10,8 @@ import {useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import Tabs from 'react-bootstrap/Tabs';import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 const baseUrl = 'http://127.0.0.1:8000/api'
 const ViewAssignment = () => {
 
@@ -27,22 +28,37 @@ const ViewAssignment = () => {
     
       });
 
-      const [submissionsData, setSubmissionsData] = useState({
-  
-        student: '',
-        file: '',
-        completed_time: '',
-        completed_date: '',
-        marks:'',
-        remarks:''
-    
-      });
+      const [submissionsData, setSubmissionsData] = useState([])
 
-    
+      const [updateSubmissionsData, setUpdateSubmissionsData] = useState({
+        
+        assignment:'',
+        student:'',
+        file:'',
+        marks: '',
+        remarks:''
+
+      })
       
         const {assignment_id} = useParams();
 
         useEffect(() =>{ 
+
+          try{
+           
+            axios.get(baseUrl+'/assignment-submissions/'+assignment_id).then((response)=>{
+
+                      setSubmissionsData(response.data);
+
+
+            })
+
+
+          }catch{
+
+
+
+          }
       
           try{
            axios.get(baseUrl+'/teacher-assignment-detail/'+assignment_id).then((response)=>{
@@ -85,6 +101,30 @@ const ViewAssignment = () => {
            }// Local File
        
         ];
+
+  const handleGrade=(submission_id)=>{
+
+    
+    try{
+      axios.get(baseUrl+'/submissions/'+submission_id).then((response)=>{
+    
+        setUpdateSubmissionsData( 
+            {
+              assignment:response.data.assignment,
+              student:response.data.student,
+              file:response.data.file,
+              marks: response.data.marks,
+              remarks:response.data.remarks
+            }
+        ); 
+  
+       });}
+       catch(error){
+        console.log(error)
+       }
+
+
+  }
 
       
   return (
@@ -129,18 +169,41 @@ const ViewAssignment = () => {
 
        </section>
       </Tab>
+     
+     
       <Tab eventKey="Submissions" title="Submissions">
-      <Card border="success" style={{  }}>
-        <Card.Header>Header</Card.Header>
-        <Card.Body>
-          <Card.Title>Success Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      {submissionsData.map((submission,index)=> 
+
+         <Card border="success" style={{  }}>
+           
+           <Row>
+               <Col md="3">
+                <img width="280px"src="/image/baselogo.svg" alt="" />
+               </Col>
+               <Col>
+                 <Card.Body style={{textAlign:'left'}}>
+                      <Card.Title style={{display:'block'}}>{submission.assignment.title}<span style={{float:'right'}} ><button id="submit-assignment" onClick={handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'4BB543'}}>Grade</button></span></Card.Title>
+                      <hr />
+                      <Card.Text><b>Assignment : </b><a href={submission.file} target='_blank'>Download Attached File</a></Card.Text>
+
+                      <Card.Text><b>Submission date : </b>{submission.completed_date}</Card.Text>
+                      <Card.Text><b>Submission time : </b>{submission.completed_time}</Card.Text>
+                      <Card.Text><b>Submitted by : </b>{submission.student.email}</Card.Text>
+                      <Card.Text><b>Student name : </b> {submission.student.first_name} {submission.student.last_name}</Card.Text>
+
+                </Card.Body>
+                </Col>
+            </Row>
+         
+         </Card>
+      
+                
+         )}
+         <hr/>
       </Tab>
+
+
+
       <Tab eventKey="Pending" title="Pending" disabled>
         Tab content for Contact
       </Tab>
