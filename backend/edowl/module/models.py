@@ -47,7 +47,7 @@ class Assignment(models.Model):
 class AssignmentSubmission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE,related_name='submitted_assignments')
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    file = models.FileField(blank=False)
+    file = models.FileField(blank=True,null=True)
     completed_time = models.TimeField(auto_now=True)
     completed_date = models.DateField(auto_now=True)
     marks = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)

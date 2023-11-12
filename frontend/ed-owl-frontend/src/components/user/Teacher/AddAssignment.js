@@ -42,6 +42,7 @@ const AddAssignment = () => {
   const submitForm=(event) => {
     const assignmentFormData = new FormData();
     
+    console.log(assignmentData.file.name)
 
     assignmentFormData.append("title", assignmentData.title)
     assignmentFormData.append("description", assignmentData.description)

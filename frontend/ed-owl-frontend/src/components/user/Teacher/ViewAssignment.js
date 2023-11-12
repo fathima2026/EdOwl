@@ -12,10 +12,18 @@ import Swal from 'sweetalert2'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Modal from 'react-bootstrap/Modal';
+
 const baseUrl = 'http://127.0.0.1:8000/api'
 const ViewAssignment = () => {
 
-    const [assignmentData, setAssignmentData] = useState({
+  const {assignment_id} = useParams();
+
+
+  const [show, setShow] = useState(false);
+
+
+  const [assignmentData, setAssignmentData] = useState({
   
         title: '',
         description: '',
@@ -28,22 +36,21 @@ const ViewAssignment = () => {
     
       });
 
-      const [submissionsData, setSubmissionsData] = useState([])
+  const [submissionsData, setSubmissionsData] = useState([])
 
-      const [updateSubmissionsData, setUpdateSubmissionsData] = useState({
+  const [updateSubmissionsData, setUpdateSubmissionsData] = useState({
         
+        id: '',
         assignment:'',
         student:'',
-        file:'',
         marks: '',
         remarks:''
 
       })
       
-        const {assignment_id} = useParams();
-
-        useEffect(() =>{ 
-
+  
+  useEffect(() =>{ 
+          //list of assignment submission
           try{
            
             axios.get(baseUrl+'/assignment-submissions/'+assignment_id).then((response)=>{
@@ -54,12 +61,12 @@ const ViewAssignment = () => {
             })
 
 
-          }catch{
+          }catch(e){
 
-
+                       console.log(e)
 
           }
-      
+          //detail of assignment
           try{
            axios.get(baseUrl+'/teacher-assignment-detail/'+assignment_id).then((response)=>{
 
@@ -88,6 +95,8 @@ const ViewAssignment = () => {
            }
       
          },[]);
+
+         //setting the files for viewing on react viewer
          const fname = assignmentData.file
          const extension = fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2);
 
@@ -102,6 +111,8 @@ const ViewAssignment = () => {
        
         ];
 
+  //handling grade submission
+
   const handleGrade=(submission_id)=>{
 
     
@@ -110,9 +121,9 @@ const ViewAssignment = () => {
     
         setUpdateSubmissionsData( 
             {
+              id: response.data.id,
               assignment:response.data.assignment,
               student:response.data.student,
-              file:response.data.file,
               marks: response.data.marks,
               remarks:response.data.remarks
             }
@@ -123,8 +134,71 @@ const ViewAssignment = () => {
         console.log(error)
        }
 
+       setShow(true)
+
 
   }
+
+  const handleChange=(event) => {
+    console.log(event.target.name,event.target.value)
+    setUpdateSubmissionsData({
+      ...updateSubmissionsData,
+      [event.target.name]:event.target.value
+    })
+  }
+
+  const handleClose = () => setShow(false);
+
+  const handleSubmit = (event) => {
+    
+    setShow(false);
+   
+    if(updateSubmissionsData.marks!=null){
+    const gradeFormData = new FormData();
+
+    gradeFormData.append("assignment",updateSubmissionsData.assignment)
+    gradeFormData.append("student", updateSubmissionsData.student)
+    gradeFormData.append("marks", updateSubmissionsData.marks)
+    gradeFormData.append("remarks", updateSubmissionsData.remarks)
+
+    try{
+      axios.put(baseUrl+'/submissions/'+updateSubmissionsData.id+'/',gradeFormData).then((response)=>{
+        
+        console.log(response.data)
+        event.preventDefault()
+  
+        if(response.status == 200){
+          Swal.fire({
+          
+            title: 'GRADE HAS BEEN UPDATED SUCCESSFULLY',
+            icon: 'success',
+            toast:true,
+            timer:3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+    
+           })
+        }
+        setUpdateSubmissionsData({
+          
+          id: '',
+          assignment:'',
+          student:'',
+          marks: '',
+          remarks:''
+    
+  
+      });
+      }) } catch(e){
+       console.log(e);
+       
+      } }
+    }
+
+
+
+
+
 
       
   return (
@@ -163,6 +237,8 @@ const ViewAssignment = () => {
    
     </Card>
 
+   
+
      <DocViewer documents={docs} style={{width: 800, height: 700, margin: 'auto'}} pluginRenderers={DocViewerRenderers} />;
 
      {/* <div>Files <img src={assignmentData.image} alt="" /></div> */}
@@ -174,38 +250,87 @@ const ViewAssignment = () => {
       <Tab eventKey="Submissions" title="Submissions">
       {submissionsData.map((submission,index)=> 
 
+        <div>
          <Card border="success" style={{  }}>
            
            <Row>
                <Col md="3">
-                <img width="280px"src="/image/baselogo.svg" alt="" />
+                <img width="200px"src="/image/assignment.svg" alt="" />
                </Col>
                <Col>
                  <Card.Body style={{textAlign:'left'}}>
-                      <Card.Title style={{display:'block'}}>{submission.assignment.title}<span style={{float:'right'}} ><button id="submit-assignment" onClick={handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'4BB543'}}>Grade</button></span></Card.Title>
+                      <Card.Title style={{display:'block'}}>{submission.assignment.title}
+                      
+                      <span style={{float:'right'}} >
+
+                        <button id="submit-assignment" onClick={()=>handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'4BB543'}}>Grade</button>
+                        
+                      </span>
+
+                      {submission.marks!=null && <>
+                        <span style={{float:'right',marginRight:'10px',color:'green'}} >
+
+                       Graded: {submission.marks}/{submission.assignment.total_mark}
+                        
+                      </span>
+                      </>}
+
+                    
+                      
+                      </Card.Title>
                       <hr />
                       <Card.Text><b>Assignment : </b><a href={submission.file} target='_blank'>Download Attached File</a></Card.Text>
 
-                      <Card.Text><b>Submission date : </b>{submission.completed_date}</Card.Text>
-                      <Card.Text><b>Submission time : </b>{submission.completed_time}</Card.Text>
-                      <Card.Text><b>Submitted by : </b>{submission.student.email}</Card.Text>
-                      <Card.Text><b>Student name : </b> {submission.student.first_name} {submission.student.last_name}</Card.Text>
+                      <Card.Text><b>Submission date : </b>{submission.completed_date}<span style={{float:'right',textAlign:'left'}}><b>Submitted by : </b>{submission.student.email}</span></Card.Text>
+                      <Card.Text><b>Submission time : </b>{submission.completed_time}<span style={{float:'right',textAlign:'left'}}><b>Student name : </b> {submission.student.first_name} {submission.student.last_name}</span></Card.Text>                   
+
+                      <hr />
+
+                      {submission.remarks!=null && <>
+
+                        <Card.Text><b>Remarks : </b> {submission.remarks}</Card.Text>
+
+                      </>}
 
                 </Card.Body>
                 </Col>
             </Row>
          
          </Card>
-      
+         <hr />
+         </div>
                 
          )}
-         <hr/>
-      </Tab>
+         
 
-
-
-      <Tab eventKey="Pending" title="Pending" disabled>
-        Tab content for Contact
+         <Modal show={show} onHide={handleClose}>
+          <Modal.Header>
+          <img  width="280px"src="/image/baselogo.svg" alt="" style={{margin:'auto'}}/>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+          <Form.Group className="mb-3">
+          <Form.Label>Marks</Form.Label>
+          <Form.Control  onChange={handleChange} type="number" placeholder="marks" name="marks"/>
+          </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Remarks</Form.Label>
+              <Form.Control onChange={handleChange} as="textarea" name="remarks" rows={3} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button size="sm" style={{width:'30%', margin:'auto'}} variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button size="sm" style={{width:'30%', margin:'auto'}} variant="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
       </Tab>
     </Tabs>
     </section>
