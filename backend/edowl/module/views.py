@@ -137,8 +137,16 @@ class SubmissionAssignment(generics.ListAPIView):
       assignment = models.Assignment.objects.get(pk=assignment_id)
       return models.AssignmentSubmission.objects.filter(assignment=assignment)
    
-
-
 class SubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
    queryset = models.AssignmentSubmission.objects.all()
    serializer_class = AssignmentSubmissionSerializer
+
+class FetchSubmission(generics.ListAPIView):
+   serializer_class = AssignmentAccessSerializer
+
+   def get_queryset(self):
+      student_id = self.kwargs['student_id']
+      assignment_id=self.kwargs['assignment_id']
+      student = models.Student.objects.get(pk=student_id)
+      assignment = models.Assignment.objects.get(pk=assignment_id)
+      return models.AssignmentSubmission.objects.filter(assignment=assignment,student=student)

@@ -44,9 +44,9 @@ urlpatterns = [
      path('module-assignment/<int:module_id>/', views.ModuleAssignmentList.as_view()),
      
     #assignment detail
-     path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
+    path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
 
-     path('teacher-assignment-detail/<int:pk>', views.AssignmentDetail.as_view()),
+    path('teacher-assignment-detail/<int:pk>', views.AssignmentDetail.as_view()),
 
      #assignment fetch weather already submitted
 
@@ -62,6 +62,10 @@ urlpatterns = [
     #fetch individual submissions
 
     path('submissions/<int:pk>/', views.SubmissionDetail.as_view()),
+   
+    #path to show a student his/her submission details
+   
+    path('submissions/<int:student_id>/<int:assignment_id>',views.FetchSubmission.as_view()),
 
 
 

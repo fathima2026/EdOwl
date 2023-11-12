@@ -255,7 +255,7 @@ const ViewAssignment = () => {
            
            <Row>
                <Col md="3">
-                <img width="200px"src="/image/assignment.svg" alt="" />
+                <img width="200px"src="/image/assignment.svg" alt="" style={{margin:'auto'}}/>
                </Col>
                <Col>
                  <Card.Body style={{textAlign:'left'}}>
@@ -331,6 +331,10 @@ const ViewAssignment = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      </Tab>
+
+      <Tab eventKey="Assignment" title="Assignment files" >
+          <DocViewer documents={docs} style={{width: 800, height: 700, margin: 'auto'}} pluginRenderers={DocViewerRenderers} />;
       </Tab>
     </Tabs>
     </section>
