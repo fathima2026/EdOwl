@@ -38,17 +38,17 @@ urlpatterns = [
      path('fetch-enroll-students/<int:course_id>',views.EnrolledStudentList.as_view()),
 
    #post new assignment    
-     path('assignment/', views.AssignmentList.as_view()),
+    path('assignment/', views.AssignmentList.as_view()),
 
    #fetch all assignments for a module
-     path('module-assignment/<int:module_id>/', views.ModuleAssignmentList.as_view()),
+    path('module-assignment/<int:module_id>/', views.ModuleAssignmentList.as_view()),
      
     #assignment detail
     path('assignment/<int:pk>/', views.AssignmentDetail.as_view()),
 
     path('teacher-assignment-detail/<int:pk>', views.AssignmentDetail.as_view()),
 
-     #assignment fetch weather already submitted
+    #assignment fetch weather already submitted
 
     path('fetch-submission-status/<int:student_id>/<int:assignment_id>',views.fetch_submission_status),
     
@@ -66,6 +66,18 @@ urlpatterns = [
     #path to show a student his/her submission details
    
     path('submissions/<int:student_id>/<int:assignment_id>',views.FetchSubmission.as_view()),
+
+   #path to create a quiz
+
+    path('quiz/', views.QuizList.as_view()),
+
+    #path to fetch quiz using module id
+
+    path('module-quiz/<int:module_id>/', views.ModuleQuizList.as_view()),
+
+    #assignment detail
+    path('quiz/<int:pk>/', views.QuizDetail.as_view()),
+
 
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer,AssignmentAccessSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer,AssignmentAccessSerializer, QuizSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
@@ -150,3 +150,20 @@ class FetchSubmission(generics.ListAPIView):
       student = models.Student.objects.get(pk=student_id)
       assignment = models.Assignment.objects.get(pk=assignment_id)
       return models.AssignmentSubmission.objects.filter(assignment=assignment,student=student)
+   
+
+class QuizList(generics.ListCreateAPIView):
+   queryset = models.Quiz.objects.all()
+   serializer_class = QuizSerializer
+
+class QuizDetail(generics.RetrieveUpdateDestroyAPIView):
+   queryset = models.Quiz.objects.all()
+   serializer_class = QuizSerializer
+
+class ModuleQuizList(generics.ListAPIView):
+   serializer_class = QuizSerializer
+
+   def get_queryset(self):
+      module_id=self.kwargs['module_id']
+      module = models.Module.objects.get(pk=module_id)
+      return models.Quiz.objects.filter(module=module)

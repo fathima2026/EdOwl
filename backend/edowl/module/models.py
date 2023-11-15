@@ -56,3 +56,16 @@ class AssignmentSubmission(models.Model):
     class Meta :
         verbose_name = "8. Submitted assignments"
 
+class Quiz(models.Model):
+    title = models.CharField(max_length=255)
+    quiz = models.JSONField(blank=True,null=True)
+    file = models.FileField(blank=True,null=True)
+    module=models.ForeignKey(Module, on_delete=models.CASCADE,related_name='quiz')
+    total_mark = models.IntegerField(default=50)
+    created_time = models.TimeField(auto_now=True)
+    created_date = models.DateField(auto_now=True)
+    due_date = models.DateField(null=True, blank=True)
+    duration = models.IntegerField(default="0")
+
+    class Meta :
+       verbose_name = "8. quiz"

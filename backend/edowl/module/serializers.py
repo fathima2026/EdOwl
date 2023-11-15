@@ -32,5 +32,10 @@ class AssignmentAccessSerializer(serializers.ModelSerializer):
         fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks']
         depth=1
 
+class QuizSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.Quiz
+        fields = ['id','title','quiz','module','total_mark','created_time','created_date','due_date','duration','file']
+
 
 
