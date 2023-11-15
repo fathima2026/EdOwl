@@ -89,6 +89,7 @@ const ViewQuiz = () => {
   const [showResults, setShowResults] = useState(false);
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds for the quiz
   const [score, setScore] = useState(0);
+  const student_id = localStorage.getItem('id')
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -96,6 +97,7 @@ const ViewQuiz = () => {
         setTimeLeft(timeLeft - 1);
       } else {
         setShowResults(true);
+
       }
     }, 1000);
 
@@ -110,6 +112,7 @@ const ViewQuiz = () => {
  
        console.log(response.data.quiz); 
        quizData = response.data.quiz
+       setTimeLeft(response.data.duration)
       //  console.log(typeof(question.quiz))
        
  
@@ -122,6 +125,16 @@ const ViewQuiz = () => {
   },[])
 
   const submitScore = () => {
+
+    try{
+      axios.get(baseUrl+'/fetch-quiz-status/'+student_id+'/'+quiz_id).then((response)=>{
+      
+        if(response.data.bool){
+          console.log(response.data.bool);
+          alert("You have already submitted this quiz");
+        }else{
+
+          
     const quizFormData = new FormData();
 
     quizFormData.append("quiz",quiz_id)
@@ -154,8 +167,16 @@ const ViewQuiz = () => {
       }catch(err) {
   
         console.log(err);
+      
       }; 
-  }
+
+        
+
+
+
+  }})}catch(error){
+        console.log(error)
+  }}
 
   const handleAnswerSelect = (selectedOption) => {
     const isCorrect = selectedOption === quizData[currentQuestion].correctAnswer;

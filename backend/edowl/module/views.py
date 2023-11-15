@@ -171,3 +171,12 @@ class ModuleQuizList(generics.ListAPIView):
 class QuizSubmissionList(generics.ListCreateAPIView):
    queryset = models.QuizSubmission.objects.all()
    serializer_class = QuizSubmissionSerializer
+
+def fetch_quiz_status(request,student_id,quiz_id):
+   student = models.Student.objects.get(id=student_id)
+   quiz = models.Quiz.objects.get(id=quiz_id)
+   submissionStatus = models.QuizSubmission.objects.filter(quiz=quiz,student=student).count()
+   if submissionStatus == 0:
+      return JsonResponse({'bool':False})
+   else:
+      return JsonResponse({'bool':True})
