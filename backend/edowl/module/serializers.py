@@ -38,4 +38,9 @@ class QuizSerializer(serializers.ModelSerializer):
         fields = ['id','title','quiz','module','total_mark','created_time','created_date','due_date','duration','file']
 
 
+class QuizSubmissionSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.QuizSubmission
+        fields = ['id','quiz','student','marks','remarks','file','completed_time','completed_date']
 
+        

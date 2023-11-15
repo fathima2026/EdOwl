@@ -67,7 +67,7 @@ urlpatterns = [
    
     path('submissions/<int:student_id>/<int:assignment_id>',views.FetchSubmission.as_view()),
 
-   #path to create a quiz
+    #path to create a quiz and update the quiz details
 
     path('quiz/', views.QuizList.as_view()),
 
@@ -77,6 +77,11 @@ urlpatterns = [
 
     #assignment detail
     path('quiz/<int:pk>/', views.QuizDetail.as_view()),
+
+    #path to submit quiz and update the quiz 
+
+    path('submit-quiz/', views.QuizSubmissionList.as_view()),
+
 
 
 

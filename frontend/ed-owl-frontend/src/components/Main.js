@@ -28,6 +28,7 @@ import AddAssignment from './user/Teacher/AddAssignment'
 import EditAssignment from './user/Teacher/EditAssignment'
 import StudentAssignment from './user/Student/StudentAssignment'
 import ViewAssignment from './user/Teacher/ViewAssignment'
+import ViewQuiz from './user/Student/ViewQuiz'
 const Main = () => {
   return (
 
@@ -58,6 +59,8 @@ const Main = () => {
 
         <Route path = "games" element={<AllGames/>}/>
 
+
+
         </Route>
 
         {/* Protect routes */}
@@ -85,8 +88,9 @@ const Main = () => {
           <Route path = "/student/courses" element={<StudentCourses/>}/>
           <Route path = "/student/topic/:module_id" element={<CourseTopicStudent/>}/>
           <Route path = "/student/assignment/:assignment_id" element={<StudentAssignment/>}/>
-
           <Route path="student-dashboard" element={<StudentDashboard />} />
+          <Route path='/student/quiz/:quiz_id' element={<ViewQuiz/>}></Route>
+
         </Route>
         
         

@@ -8,7 +8,8 @@ import axios from 'axios'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Swal from 'sweetalert2'
 const baseUrl = 'http://127.0.0.1:8000/api'
 const CourseTopicStudent = () => {
@@ -16,7 +17,9 @@ const CourseTopicStudent = () => {
   const[topicData, setTopicData]=useState([]);
   const[studentList, setStudentList]=useState([]);
   const[assignmentList, setAssignmentList]=useState([]);
+  const [quizList, setQuizList] = useState([]);
   const[totalResult, setTotalResult]=useState(0);
+  
   const {module_id} = useParams()
 
   useEffect(() =>{ 
@@ -40,6 +43,18 @@ const CourseTopicStudent = () => {
       catch(error){
        console.log(error)
       }
+      try{
+        axios.get(baseUrl+'/module-quiz/'+module_id).then((response)=>{
+   
+         setQuizList(response.data[0]); 
+         console.log( response.data[0]);
+         console.log(quizList.id);
+   
+        });}
+        catch(error){
+         console.log(error)
+        }
+  
 
               
      try{
@@ -140,7 +155,98 @@ const CourseTopicStudent = () => {
       </div>
       
         </Tab>
+        <Tab eventKey="Quiz" title="Quiz" >     
 
+        {quizList && <>
+        
+        
+          <Card border="success" style={{  }}>
+             
+             <Row>
+                 <Col md="3">
+                  <img width="200px"src="/image/assignment.svg" alt="" style={{margin:'auto'}}/>
+                 </Col>
+                 <Col>
+                   <Card.Body style={{textAlign:'left'}}>
+                        <Card.Title style={{display:'block'}}>{quizList.title}
+
+                      
+                        
+                        <span style={{float:'right'}} >
+  
+                          <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/student/quiz/`+quizList.id}>Start Quiz</Button>
+                          
+                        </span>
+   
+                        
+                          <span style={{float:'right',marginRight:'10px',color:'green'}} >
+  
+                         Points: {quizList.total_mark}
+                          
+                        </span>
+                   
+                  
+                      
+                        
+                        </Card.Title>
+
+                       
+                        <hr />
+  
+                        <Card.Text><b>Posted date : </b>{quizList.created_date}</Card.Text>
+                        <Card.Text><b>Posted time : </b>{quizList.created_time}</Card.Text>                   
+  
+                        <hr />
+                          
+                        <Card.Text><b>Due date : </b>{quizList.due_date}</Card.Text>
+
+                        <Card.Text><b>Duration : </b>{quizList.duration} minutes</Card.Text>
+
+                        
+  
+                  </Card.Body>
+                  </Col>
+              </Row>
+           
+           </Card>
+  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </>}     
+
+     
+  
+  
+  
+            </Tab>
+           
+  
+  
+  
+           
+           
      </Tabs>
 
       </div>

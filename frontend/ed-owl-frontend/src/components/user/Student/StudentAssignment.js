@@ -21,6 +21,8 @@ const StudentAssignment = () => {
         const handleShow = () => setShow(true);
         const {assignment_id} = useParams();
         const student_id = localStorage.getItem('id')
+
+
         const [assignmentSubmissionData, setAssignmentSubmissionData] = useState({
   
             assignment: '',
@@ -51,6 +53,9 @@ const StudentAssignment = () => {
           remarks: ''
 
         });
+
+
+       
 
           
         const handleFileChange=(event) => {
@@ -304,7 +309,7 @@ const StudentAssignment = () => {
          
          </Card>
           </Tab>
-         
+   
         </Tabs>
         </section>
     
