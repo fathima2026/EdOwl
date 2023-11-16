@@ -235,8 +235,8 @@ const Topics = () => {
       
       </Tab>
 
-      <Tab eventKey="contact" title="Contact" disabled>
-        Tab content for Contact
+      <Tab eventKey="Quiz" title="Quiz">
+        <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
       </Tab>
     </Tabs>
   </section>

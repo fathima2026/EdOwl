@@ -29,6 +29,7 @@ import EditAssignment from './user/Teacher/EditAssignment'
 import StudentAssignment from './user/Student/StudentAssignment'
 import ViewAssignment from './user/Teacher/ViewAssignment'
 import ViewQuiz from './user/Student/ViewQuiz'
+import SetMcq from './user/Teacher/SetMcq'
 const Main = () => {
   return (
 
@@ -81,6 +82,8 @@ const Main = () => {
         <Route path = "/teacher/edit-topic/:topic_id" element={<EditTopic/>}/>
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>
         <Route path = "/teacher/edit-module/:module_id" element={<EditCourse/>}/>
+        <Route path = "/teacher/setquiz/:module_id" element={<SetMcq/>}/>
+
         </Route>
         {/* catch all */}
         <Route element={<RequireAuth allowedRoles={["student"]} />}>
