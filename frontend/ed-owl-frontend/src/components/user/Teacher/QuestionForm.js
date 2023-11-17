@@ -53,23 +53,24 @@ const SaveButton = styled.button`
 
 const QuestionForm = ({ onSave }) => {
   const [question, setQuestion] = useState('');
-  const [answers, setAnswers] = useState(['', '']);
+  const [options, setOptions] = useState(['', '']);
   const [correctAnswer, setCorrectAnswer] = useState('');
 
-  const handleAnswerChange = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = value;
-    setAnswers(newAnswers);
+  const handleOptionChange = (index, value) => {
+    const newOptions = [...options];
+    newOptions[index] = value;
+    setOptions(newOptions);
   };
 
-  const handleAddAnswer = () => {
-    setAnswers([...answers, '']);
+
+  const handleAddOption = () => {
+    setOptions([...options, '']);
   };
 
-  const handleRemoveAnswer = (index) => {
-    const newAnswers = [...answers];
-    newAnswers.splice(index, 1);
-    setAnswers(newAnswers);
+  const handleRemoveOption = (index) => {
+    const newOptions = [...options];
+    newOptions.splice(index, 1);
+    setOptions(newOptions);
   };
 
   const handleCorrectAnswerChange = (value) => {
@@ -78,49 +79,49 @@ const QuestionForm = ({ onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave({ question, answers, correctAnswer });
+    onSave({ question, options, correctAnswer });
     setQuestion('');
-    setAnswers(['', '']);
+    setOptions(['', '']);
     setCorrectAnswer('');
   };
 
   return (
     <FormContainer>
-      <form onSubmit={handleSubmit}>
-        <FormLabel>Question:</FormLabel>
-        <FormInput type="text" value={question} onChange={(e) => setQuestion(e.target.value)} required />
+    <form onSubmit={handleSubmit}>
+      <FormLabel>Question:</FormLabel>
+      <FormInput type="text" value={question} onChange={(e) => setQuestion(e.target.value)} required />
 
-        <FormLabel>Answers:</FormLabel>
-        {answers.map((answer, index) => (
-          <div key={index} style={{ marginBottom: '10px' }}>
-            <FormInput
-              type="text"
-              value={answer}
-              onChange={(e) => handleAnswerChange(index, e.target.value)}
-              required
-            />
-            <input
-              type="radio"
-              name="correctAnswer"
-              checked={correctAnswer === answer}
-              onChange={() => handleCorrectAnswerChange(answer)}
-            />
-            <span>Correct Answer</span>
-            {index > 1 && (
-              <RemoveAnswerButton type="button" onClick={() => handleRemoveAnswer(index)}>
-                Remove Answer
-              </RemoveAnswerButton>
-            )}
-          </div>
-        ))}
+      <FormLabel>Options:</FormLabel>
+      {options.map((option, index) => (
+        <div key={index} style={{ marginBottom: '10px' }}>
+          <FormInput
+            type="text"
+            value={option}
+            onChange={(e) => handleOptionChange(index, e.target.value)}
+            required
+          />
+          <input
+            type="radio"
+            name="correctAnswer"
+            checked={correctAnswer === option}
+            onChange={() => handleCorrectAnswerChange(option)}
+          />
+          <span>Correct Answer</span>
+          {index > 1 && (
+            <RemoveAnswerButton type="button" onClick={() => handleRemoveOption(index)}>
+              Remove Option
+            </RemoveAnswerButton>
+          )}
+        </div>
+      ))}
 
-        <AddAnswerButton type="button" onClick={handleAddAnswer}>
-          Add Answer
-        </AddAnswerButton>
+      <AddAnswerButton type="button" onClick={handleAddOption}>
+        Add Option
+      </AddAnswerButton>
 
-        <SaveButton type="submit">Save Question</SaveButton>
-      </form>
-    </FormContainer>
+      <SaveButton type="submit">Save Question</SaveButton>
+    </form>
+  </FormContainer>
   );
 };
 

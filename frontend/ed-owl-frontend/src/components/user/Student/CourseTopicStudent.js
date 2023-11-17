@@ -46,8 +46,8 @@ const CourseTopicStudent = () => {
       try{
         axios.get(baseUrl+'/module-quiz/'+module_id).then((response)=>{
    
-         setQuizList(response.data[0]); 
-         console.log( response.data[0]);
+         setQuizList(response.data); 
+         console.log( response.data);
          console.log(quizList.id);
    
         });}
@@ -157,89 +157,72 @@ const CourseTopicStudent = () => {
         </Tab>
         <Tab eventKey="Quiz" title="Quiz" >     
 
-        {quizList && <>
-        
-        
-          <Card border="success" style={{  }}>
-             
-             <Row>
-                 <Col md="3">
-                  <img width="200px"src="/image/assignment.svg" alt="" style={{margin:'auto'}}/>
-                 </Col>
-                 <Col>
-                   <Card.Body style={{textAlign:'left'}}>
-                        <Card.Title style={{display:'block'}}>{quizList.title}
-
-                      
-                        
-                        <span style={{float:'right'}} >
-  
-                          <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/student/quiz/`+quizList.id}>Start Quiz</Button>
-                          
-                        </span>
+        <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'600px'}}>
+    
+        {quizList!=0 && <>
    
-                        
-                          <span style={{float:'right',marginRight:'10px',color:'green'}} >
-  
-                         Points: {quizList.total_mark}
-                          
-                        </span>
-                   
-                  
-                      
-                        
-                        </Card.Title>
+   {quizList.map((quiz,index)=>
 
-                       
-                        <hr />
-  
-                        <Card.Text><b>Posted date : </b>{quizList.created_date}</Card.Text>
-                        <Card.Text><b>Posted time : </b>{quizList.created_time}</Card.Text>                   
-  
-                        <hr />
-                          
-                        <Card.Text><b>Due date : </b>{quizList.due_date}</Card.Text>
+   
+    <Card border="success" style={{  }}>
+             
+    <Row>
+       <Col md="3">
+        <img width="200px"src="/image/assignment.svg" alt="" style={{margin:'auto'}}/>
+       </Col>
+       <Col>
+         <Card.Body style={{textAlign:'left'}}>
+              <Card.Title style={{display:'block'}}>{quiz.title}
 
-                        <Card.Text><b>Duration : </b>{quizList.duration} minutes</Card.Text>
+            
+              
+              <span style={{float:'right'}} >
 
-                        
-  
-                  </Card.Body>
-                  </Col>
-              </Row>
-           
-           </Card>
-  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        </>}     
+                <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/student/quiz/`+quiz.id}>Start Quiz</Button>
+                
+              </span>
 
-     
+              
+                <span style={{float:'right',marginRight:'10px',color:'green'}} >
+
+               Points: {quiz.total_mark}
+                
+              </span>
+         
+        
+            
+              
+              </Card.Title>
+
+             
+              <hr />
+
+              <Card.Text><b>Posted date : </b>{quiz.created_date}</Card.Text>
+              <Card.Text><b>Posted time : </b>{quiz.created_time}</Card.Text>                   
+
+              <hr />
+                
+              <Card.Text><b>Due date : </b>{quiz.due_date}</Card.Text>
+
+              <Card.Text><b>Duration : </b>{quiz.duration} minutes</Card.Text>
+
+              
+
+        </Card.Body>
+        </Col>
+    </Row>
+ 
+ </Card>
+
+   
+   
+  
+   )}
+   
+      </>}
   
   
-  
+      </div>
             </Tab>
            
   

@@ -81,8 +81,7 @@ cursor: pointer;
 `;
 
 const ViewQuiz = () => {
-
-    
+   
   const {quiz_id} = useParams()
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -90,6 +89,7 @@ const ViewQuiz = () => {
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds for the quiz
   const [score, setScore] = useState(0);
   const student_id = localStorage.getItem('id')
+  let updatedscore = 0;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -107,7 +107,7 @@ const ViewQuiz = () => {
   useEffect(()=>{
 
 
-    try{
+  try{
       axios.get(baseUrl+'/quiz/'+quiz_id).then((response)=>{
  
        console.log(response.data.quiz); 
@@ -124,13 +124,14 @@ const ViewQuiz = () => {
 
   },[])
 
-  const submitScore = () => {
+  const submitScore = (score2) => {
 
     try{
       axios.get(baseUrl+'/fetch-quiz-status/'+student_id+'/'+quiz_id).then((response)=>{
       
         if(response.data.bool){
           console.log(response.data.bool);
+          console.log(score2);
           alert("You have already submitted this quiz");
         }else{
 
@@ -139,7 +140,9 @@ const ViewQuiz = () => {
 
     quizFormData.append("quiz",quiz_id)
     quizFormData.append("student",localStorage.getItem("id"))
-    quizFormData.append("marks",parseFloat(score))
+  
+    quizFormData.append("marks",parseFloat(score2))
+    
 
     try{
       axios.post(baseUrl+'/'+'submit-quiz'+'/',quizFormData,{
@@ -190,7 +193,7 @@ const ViewQuiz = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResults(true);
-      submitScore();
+      
     }
   };
 
@@ -221,7 +224,9 @@ const ViewQuiz = () => {
             ))}
           </ul>
           <p>Your Score: {score}</p>
-          <Button onClick={resetQuiz}>Restart Quiz</Button>
+           <Button onClick={()=>submitScore(score)}>submit Quiz</Button>
+           <Button onClick={resetQuiz}>reset Quiz</Button>
+
         </div>
       ) : (
         <div>
