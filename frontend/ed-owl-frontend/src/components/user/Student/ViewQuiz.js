@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import {Link, useParams} from 'react-router-dom'
+import {Link, Navigate, useParams, useNavigate} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const baseUrl = 'http://127.0.0.1:8000/api'
@@ -81,7 +81,7 @@ cursor: pointer;
 `;
 
 const ViewQuiz = () => {
-   
+  const navigate = useNavigate();
   const {quiz_id} = useParams()
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -89,7 +89,7 @@ const ViewQuiz = () => {
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds for the quiz
   const [score, setScore] = useState(0);
   const student_id = localStorage.getItem('id')
-  let updatedscore = 0;
+ 
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -133,7 +133,10 @@ const ViewQuiz = () => {
           console.log(response.data.bool);
           console.log(score2);
           alert("You have already submitted this quiz");
-        }else{
+          navigate("/student/courses");
+        }
+        else
+        {
 
           
     const quizFormData = new FormData();
@@ -174,7 +177,7 @@ const ViewQuiz = () => {
       }; 
 
         
-
+   resetQuiz();
 
 
   }})}catch(error){
@@ -224,9 +227,7 @@ const ViewQuiz = () => {
             ))}
           </ul>
           <p>Your Score: {score}</p>
-           <Button onClick={()=>submitScore(score)}>submit Quiz</Button>
-           <Button onClick={resetQuiz}>reset Quiz</Button>
-
+           <Button onClick={()=>submitScore(score)}>Go home</Button>
         </div>
       ) : (
         <div>

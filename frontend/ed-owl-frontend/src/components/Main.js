@@ -20,7 +20,7 @@ import RequireAuth from './user/RequireAuth'
 import LoginChoice from './user/LoginChoice'
 import Unauthorized from './user/Unauthorized'
 import StudentDashboard from './user/Student/StudentDashboard'
-import AllGames from './user/Games/AllGames'
+import AllGames from './user/Public_Games/AllGames'
 import RegisterChoice from './user/RegisterChoice'
 import StudentCourses from './user/Student/StudentCourses'
 import CourseTopicStudent from './user/Student/CourseTopicStudent'
@@ -30,6 +30,7 @@ import StudentAssignment from './user/Student/StudentAssignment'
 import ViewAssignment from './user/Teacher/ViewAssignment'
 import ViewQuiz from './user/Student/ViewQuiz'
 import SetMcq from './user/Teacher/SetMcq'
+import Hangman from './user/Student/Games/Hangman/Hangman'
 const Main = () => {
   return (
 
@@ -93,6 +94,8 @@ const Main = () => {
           <Route path = "/student/assignment/:assignment_id" element={<StudentAssignment/>}/>
           <Route path="student-dashboard" element={<StudentDashboard />} />
           <Route path='/student/quiz/:quiz_id' element={<ViewQuiz/>}></Route>
+          <Route path='/student/hangman' element={<Hangman/>}></Route>
+
 
         </Route>
         

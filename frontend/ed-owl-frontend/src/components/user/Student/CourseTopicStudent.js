@@ -157,7 +157,7 @@ const CourseTopicStudent = () => {
         </Tab>
         <Tab eventKey="Quiz" title="Quiz" >     
 
-        <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'600px'}}>
+        <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'700px'}}>
     
         {quizList!=0 && <>
    
@@ -189,9 +189,6 @@ const CourseTopicStudent = () => {
                 
               </span>
          
-        
-            
-              
               </Card.Title>
 
              
@@ -226,11 +223,23 @@ const CourseTopicStudent = () => {
             </Tab>
            
   
-  
+    
+     <Tab eventKey="Game" title="Game" > 
+
+
+     <Button as={Link} to={`/student/hangman`}></Button>
+
+
+
+     </Tab>
   
            
            
      </Tabs>
+
+    
+
+
 
       </div>
     </div>

@@ -127,7 +127,7 @@ const StudentAssignment = () => {
             useEffect(() =>{ 
           
               try{
-               axios.get(baseUrl+'/teacher-assignment-detail/'+assignment_id).then((response)=>{
+               axios.get(baseUrl+'/assignment/'+assignment_id).then((response)=>{
           
                 setAssignmentData( 
                     {
@@ -149,26 +149,37 @@ const StudentAssignment = () => {
                //fetching students own submission
 
                try{
+                axios.get(baseUrl+'/fetch-submission-status/'+student_id+'/'+assignment_id).then((response)=>{
+                
+                  if(response.data.bool){
+                    
+                    axios.get(baseUrl+'/submissions/'+student_id+'/'+assignment_id).then((response)=>{
 
-                axios.get(baseUrl+'/submissions/'+student_id+'/'+assignment_id).then((response)=>{
+                      console.log(response.data)
+                      setMySubmissionData(
+                          {
+                          assignment: response.data[0].assignment,
+                          file: response.data[0].file,
+                          marks:  response.data[0].marks,
+                          remarks: response.data[0].remarks,
+                          completed_date: response.data[0].completed_date,
+                          completed_time: response.data[0].completed_time
+                        }
+                        ); })
+               }})}
+                  
+                  catch(error){
 
-                  console.log(response.data)
-                  setMySubmissionData(
-                      {
-                      assignment: response.data[0].assignment,
-                      file: response.data[0].file,
-                      marks:  response.data[0].marks,
-                      remarks: response.data[0].remarks,
-                      completed_date: response.data[0].completed_date,
-                      completed_time: response.data[0].completed_time
-                    }
-                    );
+                     console.log(error)
 
-                });
+                  }
 
-               }catch(error){
-                       console.log(error)
-               }
+                
+               
+
+
+              
+
           
              },[]);
     

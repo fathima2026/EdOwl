@@ -85,6 +85,10 @@ urlpatterns = [
     #path to fetch if quiz already submitted
     path('fetch-quiz-status/<int:student_id>/<int:quiz_id>',views.fetch_quiz_status),
 
+    #path to show a student his/her quiz details
+   
+    path('submissions/<int:student_id>/<int:quiz_id>',views.FetchSubmission.as_view()),
+
 
 
 
