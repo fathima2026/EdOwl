@@ -18,14 +18,41 @@ const CourseTopicStudent = () => {
   const[studentList, setStudentList]=useState([]);
   const[assignmentList, setAssignmentList]=useState([]);
   const [quizList, setQuizList] = useState([]);
+  const[hangmanList, setHangmanList]=useState([]);
   const[totalResult, setTotalResult]=useState(0);
-  
+  const[gameTab, setGameTab]=useState(false);
   const {module_id} = useParams()
 
-  useEffect(() =>{ 
 
-    try{
-     axios.get(baseUrl+'/module-topic/'+module_id).then((response)=>{
+  const handleClick= (e) => {
+    if(e=='Game'){
+      setGameTab(true)
+    }
+  }
+
+      useEffect(()=>{
+
+        //fetching hangman datas
+            try{
+              axios.get(baseUrl+'/module-hangman/'+module_id).then((response)=>{
+        
+              setHangmanList(response.data); 
+              console.log(hangmanList);
+        
+              });}
+              catch(error){
+              console.log(error)
+              }
+
+      },[gameTab])
+        
+ 
+
+
+     useEffect(() =>{ 
+
+       try{
+        axios.get(baseUrl+'/module-topic/'+module_id).then((response)=>{
 
       setTopicData(response.data); 
       setTotalResult(response.data.length); 
@@ -84,7 +111,7 @@ const CourseTopicStudent = () => {
       defaultActiveKey="home"
       id="justify-tab-example"
       className="mb-3"
-      justify
+      justify onSelect={(e) => handleClick(e)}
     >
       <Tab eventKey="home" title="Home">
       {topicData.length==0 && <> <p className="py-4"style={{textAlign:'center'}}>You do not have any topics currently! Please add some topics!</p>
@@ -159,18 +186,18 @@ const CourseTopicStudent = () => {
 
         <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'700px'}}>
     
-        {quizList!=0 && <>
-   
-   {quizList.map((quiz,index)=>
+        {quizList!=0 && <> {quizList.map((quiz,index)=>
 
    
-    <Card border="success" style={{  }}>
+        <Card border="success" style={{  }}>
              
-    <Row>
-       <Col md="3">
+        <Row>
+        
+        <Col md="3">
         <img width="200px"src="/image/assignment.svg" alt="" style={{margin:'auto'}}/>
-       </Col>
-       <Col>
+        </Col>
+       
+        <Col>
          <Card.Body style={{textAlign:'left'}}>
               <Card.Title style={{display:'block'}}>{quiz.title}
 
@@ -224,14 +251,31 @@ const CourseTopicStudent = () => {
            
   
     
-     <Tab eventKey="Game" title="Game" > 
-
-
-     <Button as={Link} to={`/student/hangman`}></Button>
-
-
-
-     </Tab>
+    <Tab eventKey="Game" title="Game" > 
+     <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'700px'}}>
+    
+    {hangmanList!=0 && <> {hangmanList.map((hangman,index)=>
+    <Card border="success" style={{ marginBottom:'5px' }}>
+    <Row>
+    <Col md="3">
+    <img width="200px"src="/image/hangman-game.png" alt="" style={{margin:'auto'}}/>
+    </Col>
+    <Col>
+     <Card.Body style={{textAlign:'left'}}>
+          <Card.Title style={{display:'block'}}>{hangman.title}
+          <span style={{float:'right'}} >
+          <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/student/hangman/`+hangman.id}>Enter game</Button>
+          </span>
+          <span style={{float:'right',marginRight:'10px',color:'green'}} >Points: {hangman.total_mark}</span>
+          </Card.Title>
+          <hr />
+          <Card.Text><b>Posted date and time : </b>{hangman.created_date} at {hangman.created_time}</Card.Text>
+          <hr />
+          <Card.Text style={{display:'block'}}><b>Due date : </b>{hangman.due_date}</Card.Text>
+      </Card.Body>
+    </Col>
+    </Row>
+    </Card>)}<hr/></>}</div></Tab>
   
            
            

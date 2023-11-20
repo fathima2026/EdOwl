@@ -43,4 +43,21 @@ class QuizSubmissionSerializer(serializers.ModelSerializer):
         model = models.QuizSubmission
         fields = ['id','quiz','student','marks','remarks','file','completed_time','completed_date']
 
+
+class HangmanSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.Hangman
+        fields = ['id','title','module','words','hints','total_mark','created_time','created_date','due_date']
+
+
+class HangmanSubmissionSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.HangmanSubmission
+        fields = ['id','hangman','student','marks','completed_time','completed_date']
+
+class HangmanAccessSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = models.HangmanSubmission
+        fields = ['id','hangman','student','marks','completed_time','completed_date']
+        depth=1
         

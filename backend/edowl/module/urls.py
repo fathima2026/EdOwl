@@ -65,7 +65,7 @@ urlpatterns = [
    
     #path to show a student his/her submission details
    
-    path('submissions/<int:student_id>/<int:assignment_id>',views.FetchSubmission.as_view()),
+    path('assignment-submissions/<int:student_id>/<int:assignment_id>',views.FetchSubmission.as_view()),
 
     #path to create a quiz and update the quiz details
 
@@ -85,9 +85,40 @@ urlpatterns = [
     #path to fetch if quiz already submitted
     path('fetch-quiz-status/<int:student_id>/<int:quiz_id>',views.fetch_quiz_status),
 
-    #path to show a student his/her quiz details
+    #path to show a student his/her quiz details //not implemented yet
    
-    path('submissions/<int:student_id>/<int:quiz_id>',views.FetchSubmission.as_view()),
+    path('quiz-submissions/<int:student_id>/<int:quiz_id>',views.FetchSubmission.as_view()),
+
+    #path to create a hangman and update the hangman details
+
+    path('hangman/', views.HangmanList.as_view()),
+
+    #path to fetch hangman using module id
+
+    path('module-hangman/<int:module_id>/', views.ModuleHangmanList.as_view()),
+
+    #hangman detail
+    path('hangman/<int:pk>/', views.HangmanDetail.as_view()),
+
+    #path to submit hangman and update the hangman 
+
+    path('submit-hangman/', views.HangmanSubmissionList.as_view()),
+
+    #path to fetch if hangman already submitted
+    path('fetch-hangman-status/<int:student_id>/<int:hangman_id>',views.fetch_hangman_status),
+
+    #Fetch all submissions for an hangman
+    path('hangman-submissions/<int:hangman_id>/', views.SubmissionHangman.as_view()),
+
+    #path to show a student his/her hangman details
+   
+    path('hangman-submissions/<int:student_id>/<int:hangman_id>',views.FetchSubmissionHangman.as_view()),
+
+
+
+
+
+    
 
 
 

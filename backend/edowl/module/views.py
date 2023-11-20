@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer,AssignmentAccessSerializer, QuizSerializer, QuizSubmissionSerializer
+from .serializers import ModuleSerializer,TopicSerializer, EnrolledModuleSerializer, AssignmentSerializer, AssignmentSubmissionSerializer,AssignmentAccessSerializer, QuizSerializer, QuizSubmissionSerializer,HangmanSerializer,HangmanSubmissionSerializer,HangmanAccessSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from . import models
@@ -180,3 +180,53 @@ def fetch_quiz_status(request,student_id,quiz_id):
       return JsonResponse({'bool':False})
    else:
       return JsonResponse({'bool':True})
+   
+
+class HangmanList(generics.ListCreateAPIView):
+   queryset = models.Hangman.objects.all()
+   serializer_class = HangmanSerializer
+
+class HangmanDetail(generics.RetrieveUpdateDestroyAPIView):
+   queryset = models.Hangman.objects.all()
+   serializer_class = HangmanSerializer
+
+class ModuleHangmanList(generics.ListAPIView):
+   serializer_class = HangmanSerializer
+
+   def get_queryset(self):
+      module_id=self.kwargs['module_id']
+      module = models.Module.objects.get(pk=module_id)
+      return models.Hangman.objects.filter(module=module)
+   
+class HangmanSubmissionList(generics.ListCreateAPIView):
+   queryset = models.HangmanSubmission.objects.all()
+   serializer_class = HangmanSubmissionSerializer
+
+def fetch_hangman_status(request,student_id,hangman_id):
+   student = models.Student.objects.get(id=student_id)
+   hangman = models.Hangman.objects.get(id=hangman_id)
+   submissionStatus = models.HangmanSubmission.objects.filter(hangman=hangman,student=student).count()
+   if submissionStatus == 0:
+      return JsonResponse({'bool':False})
+   else:
+      return JsonResponse({'bool':True})
+   
+
+class SubmissionHangman(generics.ListAPIView):
+   serializer_class = HangmanAccessSerializer
+
+   def get_queryset(self):
+      hangman_id=self.kwargs['hangman_id']
+      hangman = models.Hangman.objects.get(pk=hangman_id)
+      return models.HangmanSubmission.objects.filter(hangman=hangman)
+   
+
+class FetchSubmissionHangman(generics.ListAPIView):
+   serializer_class = HangmanAccessSerializer
+
+   def get_queryset(self):
+      student_id = self.kwargs['student_id']
+      hangman_id=self.kwargs['hangman_id']
+      student = models.Student.objects.get(pk=student_id)
+      hangman = models.Hangman.objects.get(pk=hangman_id)
+      return models.HangmanSubmission.objects.filter(hangman=hangman)

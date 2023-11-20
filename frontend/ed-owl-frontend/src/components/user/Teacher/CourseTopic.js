@@ -238,6 +238,12 @@ const Topics = () => {
       <Tab eventKey="Quiz" title="Quiz">
         <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
       </Tab>
+      <Tab eventKey="Game" title="Game">
+        <Button variant='warning' as={Link} to={`/teacher/sethangman/`+module_id}>Hangman</Button>
+        <Button variant='warning' as={Link} to={`/teacher/hangman/`+module_id}>Hangman Dashboard</Button>
+        <Button as={Link} to={`/teacher/setquiz/`+module_id}>Puzzle</Button>
+        <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
+      </Tab>
     </Tabs>
   </section>
 

@@ -31,6 +31,9 @@ import ViewAssignment from './user/Teacher/ViewAssignment'
 import ViewQuiz from './user/Student/ViewQuiz'
 import SetMcq from './user/Teacher/SetMcq'
 import Hangman from './user/Student/Games/Hangman/Hangman'
+import StudentHangman from './user/Student/StudentHangman'
+import HangmanForm from './user/Teacher/HangmanForm'
+import HangmanDashboard from './user/Teacher/HangmanDashboard'
 const Main = () => {
   return (
 
@@ -84,6 +87,10 @@ const Main = () => {
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>
         <Route path = "/teacher/edit-module/:module_id" element={<EditCourse/>}/>
         <Route path = "/teacher/setquiz/:module_id" element={<SetMcq/>}/>
+        <Route path = "/teacher/sethangman/:module_id" element={<HangmanForm/>}/>
+        <Route path = "/teacher/hangman/:module_id" element={<HangmanDashboard/>}/>
+
+
 
         </Route>
         {/* catch all */}
@@ -94,7 +101,8 @@ const Main = () => {
           <Route path = "/student/assignment/:assignment_id" element={<StudentAssignment/>}/>
           <Route path="student-dashboard" element={<StudentDashboard />} />
           <Route path='/student/quiz/:quiz_id' element={<ViewQuiz/>}></Route>
-          <Route path='/student/hangman' element={<Hangman/>}></Route>
+          <Route path='/student/hangman/:hangman_id' element={<StudentHangman/>}></Route>
+          <Route path='/student/play-hangman/:hangman_id' element={<Hangman/>}></Route>
 
 
         </Route>

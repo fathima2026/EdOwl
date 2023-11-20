@@ -82,8 +82,27 @@ class QuizSubmission(models.Model):
     class Meta :
        verbose_name = "8. Submitted Quiz"
 
+class Hangman(models.Model):
+    title = models.CharField(max_length=255)
+    module=models.ForeignKey(Module, on_delete=models.CASCADE,related_name='hangman')
+    words = models.JSONField(blank=True,null=True)
+    hints = models.JSONField(blank=True,null=True)
+    total_mark = models.IntegerField(default=50)
+    created_time = models.TimeField(auto_now=True)
+    created_date = models.DateField(auto_now=True)
+    due_date = models.DateField(null=True, blank=True)
 
+    class Meta :
+       verbose_name = "9. hangman"
 
+class HangmanSubmission(models.Model):
+    hangman = models.ForeignKey(Hangman, on_delete=models.CASCADE, related_name='submitted_hangman')
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    marks = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
+    completed_time = models.TimeField(auto_now=True)
+    completed_date = models.DateField(auto_now=True)
 
+    class Meta :
+       verbose_name = "10. Submitted hangman"
 
 

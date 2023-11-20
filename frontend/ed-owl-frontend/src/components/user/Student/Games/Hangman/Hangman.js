@@ -6,23 +6,50 @@ import Word from './components/Word';
 import Popup from './components/Popup';
 import Notification from './components/Notification';
 import { showNotification as show, checkWin } from './helpers/helpers';
-
+import axios from 'axios';
 import './Hangman.css';
+import { useParams } from 'react-router-dom';
+const baseUrl = 'http://127.0.0.1:8000/api'
 
+let words = ['application', 'bangladesh', 'interface', 'wizard'];
+let hints = ['it is a software','it is a country name','it is what you see', 'harry potter']
 
 
 function Hangman() {
-  const words = ['application', 'bangladesh', 'interface', 'wizard'];
-  const hints = ['it is a software','it is a country name','it is what you see', 'harry potter']
- 
+
+  const{hangman_id}= useParams();
   const [playable, setPlayable] = useState(true);
   const [correctLetters, setCorrectLetters] = useState([]);
   const [wrongLetters, setWrongLetters] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   const [count, setCount] = useState(0);
+  const [selectedWord, setSelectedWord] = useState('');
+  const [selectedHint, setSelectedHint] = useState('');
 
-  let selectedWord = words[count];
-  let selectedHint = hints[count];
+ 
+  
+  useEffect(()=>{
+    try{
+        axios.get(baseUrl+'/hangman/'+hangman_id).then((response)=>{
+   
+        
+         console.log(response.data.words); 
+         console.log(response.data.hints); 
+         console.log(response.data.hints)
+         
+         words = response.data.words
+         hints = response.data.hints
+
+         setSelectedWord(words[count]);
+         setSelectedHint(hints[count]);
+   
+        });}
+        catch(error){
+         console.log(error)
+        }
+  
+  
+    },[])
 
   useEffect(() => {
     const handleKeydown = event => {
@@ -57,9 +84,9 @@ function Hangman() {
     setWrongLetters([]);
 
     const random = Math.floor(Math.random() * words.length);
-    setCount(count+1);
-    selectedWord = words[count];
-    selectedHint = hints[count];
+    setCount(count + 1);
+    setSelectedWord(words[count + 1]);
+    setSelectedHint(hints[count + 1]);
   }
 
   return (
@@ -71,7 +98,7 @@ function Hangman() {
         <WrongLetters wrongLetters={wrongLetters} />
         <Word selectedWord={selectedWord} correctLetters={correctLetters} />
       </div>
-      <Popup count={count} correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} />
+      <Popup length={words.length} count={count} correctLetters={correctLetters} wrongLetters={wrongLetters} selectedWord={selectedWord} setPlayable={setPlayable} playAgain={playAgain} />
       <Notification showNotification={showNotification} />
     </div>
   );
