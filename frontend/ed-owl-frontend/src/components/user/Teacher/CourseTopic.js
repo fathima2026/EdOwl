@@ -9,17 +9,22 @@ import Swal from 'sweetalert2'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Table from 'react-bootstrap/Table';
-
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 const baseUrl = 'http://127.0.0.1:8000/api'
 const Topics = () => {
  
   const[topicData, setTopicData]=useState([]);
   const[studentList, setStudentList]=useState([]);
   const[assignmentList, setAssignmentList]=useState([]);
+  const [hangmanList, setHangmanList] = useState([])
+
   const[totalResult, setTotalResult]=useState(0);
   const {module_id} = useParams()
 
   useEffect(() =>{ 
+
+
 
     try{
      axios.get(baseUrl+'/module-topic/'+module_id).then((response)=>{
@@ -40,6 +45,19 @@ const Topics = () => {
       });}
       catch(error){
        console.log(error)
+      }
+
+      try{
+
+        axios.get(baseUrl+'/module-hangman/'+module_id).then((response)=>{
+      
+           setHangmanList(response.data)
+           console.log(hangmanList)
+      
+        })
+      
+      }catch(error){
+          console.log(error)
       }
 
               
@@ -239,10 +257,61 @@ const Topics = () => {
         <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
       </Tab>
       <Tab eventKey="Game" title="Game">
-        <Button variant='warning' as={Link} to={`/teacher/sethangman/`+module_id}>Hangman</Button>
-        <Button variant='warning' as={Link} to={`/teacher/hangman/`+module_id}>Hangman Dashboard</Button>
-        <Button as={Link} to={`/teacher/setquiz/`+module_id}>Puzzle</Button>
-        <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
+        <Button variant='warning' as={Link} to={`/teacher/sethangman/`+module_id}>Set Hangman</Button>
+        <Button as={Link} to={`/teacher/setquiz/`+module_id}> Set Puzzle</Button>
+        <br />Hangman Games :
+        <hr />
+        <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'300px'}}>
+    
+    {hangmanList!=0 && <> {hangmanList.map((hangman,index)=>
+    <Card border="success" style={{ marginBottom:'5px', height:'200px'}}>
+    <Row>
+    <Col md="3">
+    <img width="180px"src="/image/hangman-game.png" alt="" style={{margin:'auto'}}/>
+    </Col>
+    <Col>
+     <Card.Body style={{textAlign:'left'}}>
+          <Card.Title style={{display:'block'}}>{hangman.title}
+          <span style={{float:'right'}} >
+          <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/teacher/hangman/`+hangman.id}>View Details</Button>
+          </span>
+          <span style={{float:'right',marginRight:'10px',color:'green'}} >Points: {hangman.total_mark}</span>
+          </Card.Title>
+          <hr />
+          <Card.Text><b>Posted date and time : </b>{hangman.created_date} at {hangman.created_time}</Card.Text>
+          <hr />
+          <Card.Text style={{display:'block'}}><b>Due date : </b>{hangman.due_date}</Card.Text>
+      </Card.Body>
+    </Col>
+    </Row>
+    </Card>)}<hr/></>}</div>
+
+    <hr />
+
+    <div  style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'300px'}}>
+    
+    {hangmanList!=0 && <> {hangmanList.map((hangman,index)=>
+    <Card border="success" style={{ marginBottom:'5px' }}>
+    <Row>
+    <Col md="3">
+    <img width="180px"src="/image/hangman-game.png" alt="" style={{margin:'auto'}}/>
+    </Col>
+    <Col>
+     <Card.Body style={{textAlign:'left'}}>
+          <Card.Title style={{display:'block'}}>{hangman.title}
+          <span style={{float:'right'}} >
+          <Button id="submit-assignment" style={{marginTop:'-4px',fontSize:'12px',fontWeight:'500'}} as={Link} to={`/student/hangman/`+hangman.id}>Enter game</Button>
+          </span>
+          <span style={{float:'right',marginRight:'10px',color:'green'}} >Points: {hangman.total_mark}</span>
+          </Card.Title>
+          <hr />
+          <Card.Text><b>Posted date and time : </b>{hangman.created_date} at {hangman.created_time}</Card.Text>
+          <hr />
+          <Card.Text style={{display:'block'}}><b>Due date : </b>{hangman.due_date}</Card.Text>
+      </Card.Body>
+    </Col>
+    </Row>
+    </Card>)}<hr/></>}</div>
       </Tab>
     </Tabs>
   </section>

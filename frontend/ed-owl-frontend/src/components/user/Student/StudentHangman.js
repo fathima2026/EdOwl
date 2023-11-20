@@ -100,7 +100,7 @@ const StudentHangman = () => {
               <Card.Title style={{display:'block'}}>Title:{hangmanDetail.title} 
               <span style={{float:'right'}}>
 
-                {played ? <p>Score: {submission.marks}/{hangmanDetail.total_marks} </p> : 
+                {played ? <p>Score: {submission.marks}/{hangmanDetail.total_mark} </p> : 
               
               <Button  as={Link} to={`/student/play-hangman/`+hangman_id}
               id="submit-assignment"style={{borderRadius:'5px',backgroundColor:'#FFDA33'}}>Play now</Button >}

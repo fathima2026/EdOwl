@@ -88,7 +88,7 @@ const Main = () => {
         <Route path = "/teacher/edit-module/:module_id" element={<EditCourse/>}/>
         <Route path = "/teacher/setquiz/:module_id" element={<SetMcq/>}/>
         <Route path = "/teacher/sethangman/:module_id" element={<HangmanForm/>}/>
-        <Route path = "/teacher/hangman/:module_id" element={<HangmanDashboard/>}/>
+        <Route path = "/teacher/hangman/:hangman_id" element={<HangmanDashboard/>}/>
 
 
 
