@@ -88,10 +88,25 @@ const HangmanForm = () => {
       setCurrentWord('');
       setCurrentHint('');
     } else {
-      alert('Please enter both a word and a hint.');
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please enter both a word and a hint.',
+        icon: 'error',
+        toast: true,
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
     }
   };
-
+  const handleDeleteWord = (index) => {
+    const updatedWords = [...words];
+    const updatedHints = [...hints];
+    updatedWords.splice(index, 1);
+    updatedHints.splice(index, 1);
+    setWords(updatedWords);
+    setHints(updatedHints);
+  };
  
   const [hangmanQData, setHangmanQData] = useState({
 
@@ -229,6 +244,8 @@ const HangmanForm = () => {
           {words.map((word, index) => (
             <WordItem key={index}>
               <strong>{word}</strong> - {hints[index]}
+              <Button onClick={() => handleDeleteWord(index)}>Delete</Button>
+
             </WordItem>
           ))}
         </WordList>
