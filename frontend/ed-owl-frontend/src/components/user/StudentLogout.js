@@ -1,12 +1,23 @@
 import React from 'react'
-import { useLocation, Navigate, Outlet } from "react-router-dom";
-
+import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
+import useAuth from '../../hooks/useAuth';
 const StudentLogout = () => {
   
-    localStorage.removeItem('studentLoginStatus')
-       
-    window.location.href= '/role'
+    const navigate = useNavigate()
  
+    
+    useEffect(()=>{
+
+
+        localStorage.removeItem('studentLoginStatus')
+        localStorage.removeItem('refreshToken')
+
+        navigate('/role') 
+
+    },[])
+    
+   
 }
 
 export default StudentLogout

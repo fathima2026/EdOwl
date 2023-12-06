@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import useRefreshToken from "../../hooks/useRefreshToken";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Users = () => {
     const [users, setUsers] = useState();
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
-    const location = useLocation();
-
+    const refresh = useRefreshToken();
+    const axiosPrivate = useAxiosPrivate();
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
 
         const getUsers = async () => {
             try {
-                const response = await axiosPrivate.get('/users', {
+                const response = await axiosPrivate.get('http://localhost:8000/api/teacher', {
                     signal: controller.signal
                 });
                 console.log(response.data);
                 isMounted && setUsers(response.data);
             } catch (err) {
                 console.error(err);
-                navigate('/login', { state: { from: location }, replace: true });
             }
         }
 
@@ -29,7 +30,7 @@ const Users = () => {
 
         return () => {
             isMounted = false;
-            controller.abort();
+            isMounted && controller.abort()
         }
     }, [])
 
@@ -43,7 +44,14 @@ const Users = () => {
                     </ul>
                 ) : <p>No users to display</p>
             }
-        </article>
+
+            <Button as={Link} to={'/admin'}></Button>
+          <Button onClick={()=>refresh()}>refresh</Button>
+        
+        </article> 
+
+
+       
     );
 };
 

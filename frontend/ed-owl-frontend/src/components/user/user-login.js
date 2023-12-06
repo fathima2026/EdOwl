@@ -52,7 +52,13 @@ const Login = () => {
       studentFormData.append('password',pwd)
 
       
-        const response = await axios.post(baseUrl+role+'/login',studentFormData)
+        const response = await axios.post(baseUrl+role+'/login',studentFormData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        })
         e.preventDefault();
 
    
@@ -66,7 +72,9 @@ const Login = () => {
                   console.log(JSON.stringify(response?.data));
                   console.log(JSON.stringify(response));
                   
-                  const accessToken = response?.data?.accessToken;
+                  const accessToken = response?.data?.access;
+                  const refreshToken = response?.data?.refresh;
+
                   console.log(accessToken);
                  
                   const is_student = response?.data?.is_student;
@@ -90,13 +98,18 @@ const Login = () => {
                   console.log(roles)
                   let role = roles[0];
                   console.log(role)
-                  setAuth({ email, pwd, roles, accessToken });
+                  localStorage.setItem('role', role)
+                  localStorage.setItem('refreshToken',refreshToken)
+                  setAuth({ email, pwd, roles, accessToken, refreshToken });
                   setEmail('');
                   setPwd('');
                   
                   if(role=="user"){
                     navigate('/unauthorized')
-                  }else{
+                  }else if(role=="staff"){
+                    navigate('/user')
+                  }
+                  else{
                   navigate('/'+role+'/courses')
 
                   }

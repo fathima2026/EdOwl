@@ -34,6 +34,9 @@ import Hangman from './user/Student/Games/Hangman/Hangman'
 import StudentHangman from './user/Student/StudentHangman'
 import HangmanForm from './user/Teacher/HangmanForm'
 import HangmanDashboard from './user/Teacher/HangmanDashboard'
+import Users from './user/Users'
+import Admin from './user/Admin'
+import PersistLogin from './user/PersistLogin'
 const Main = () => {
   return (
 
@@ -69,6 +72,17 @@ const Main = () => {
         </Route>
 
         {/* Protect routes */}
+        <Route element={<PersistLogin/>} >
+
+        <Route element = {<RequireAuth allowedRoles={["staff"]}/>} >
+
+        
+        <Route path = "/user" element={<Users/>}/>
+        <Route path = "/admin" element={<Admin/>}/>
+
+
+
+        </Route>
 
 
         <Route element = {<RequireAuth allowedRoles={["teacher"]}/>} >
@@ -108,8 +122,8 @@ const Main = () => {
         </Route>
         
         
-        
         </Route>
+        </Route> 
 
 
    
