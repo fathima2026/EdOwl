@@ -36,7 +36,9 @@ import HangmanForm from './user/Teacher/HangmanForm'
 import HangmanDashboard from './user/Teacher/HangmanDashboard'
 import Users from './user/Users'
 import Admin from './user/Admin'
+import ViewQuizTeacher from './user/Teacher/ViewQuiz'
 import PersistLogin from './user/PersistLogin'
+import LeaderBoard from './user/Student/LeaderBoard'
 const Main = () => {
   return (
 
@@ -101,6 +103,7 @@ const Main = () => {
         <Route path = "/teacher/view-topic/:topic_id" element={<TopicDetail/>}/>
         <Route path = "/teacher/edit-module/:module_id" element={<EditCourse/>}/>
         <Route path = "/teacher/setquiz/:module_id" element={<SetMcq/>}/>
+        <Route path = "/teacher/quiz/:quiz_id" element={<ViewQuizTeacher/>}/>
         <Route path = "/teacher/sethangman/:module_id" element={<HangmanForm/>}/>
         <Route path = "/teacher/hangman/:hangman_id" element={<HangmanDashboard/>}/>
 
@@ -117,7 +120,7 @@ const Main = () => {
           <Route path='/student/quiz/:quiz_id' element={<ViewQuiz/>}></Route>
           <Route path='/student/hangman/:hangman_id' element={<StudentHangman/>}></Route>
           <Route path='/student/play-hangman/:hangman_id' element={<Hangman/>}></Route>
-
+          <Route path='/student/leaderboard' element={<LeaderBoard/>}></Route>
 
         </Route>
         

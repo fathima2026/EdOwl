@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar';
 import axios from 'axios';
 import {useState} from 'react'
 import Swal from 'sweetalert2'
-
+import "./style.css"
 const baseUrl = 'http://127.0.0.1:8000/api/module/'
 
 const AddCourse = () => {
@@ -78,18 +78,18 @@ const AddCourse = () => {
     <aside className='col-3'>
     <Sidebar/>
     </aside>
-    <section className='py-10 col-8 m-3' style={{backgroundColor: '#eee', borderRadius:'5px'}}>
-    <Form className="py-4"  style={{width:'50%', margin:'auto'}}>
+    <section className='py-10 col-8 m-3 form-section'>
+    <Form className="py-4 form-tag">
       <Form.Group className="mb-3">
-        <Form.Label>Module Title</Form.Label>
+        <Form.Label className='form-text'>Module Title</Form.Label>
         <Form.Control onChange={handleChange} value={moduleData.title} type="text" placeholder="Enter Module Name" name="title"/>
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Description</Form.Label>
+        <Form.Label className='form-text'>Description</Form.Label>
         <Form.Control onChange={handleChange} value={moduleData.description} type="text" placeholder="description" name="description"/>
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>code</Form.Label>
+        <Form.Label className='form-text'>code</Form.Label>
         <Form.Control onChange={handleChange} value={moduleData.code} type="text" placeholder="code" name="code"/>
       </Form.Group>
       <Button onClick={submitForm} variant="primary" type="submit">

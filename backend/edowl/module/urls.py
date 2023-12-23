@@ -75,8 +75,11 @@ urlpatterns = [
 
     path('module-quiz/<int:module_id>/', views.ModuleQuizList.as_view()),
 
-    #assignment detail
+    #quiz detail
     path('quiz/<int:pk>/', views.QuizDetail.as_view()),
+
+    #Fetch all submissions for an quiz
+    path('quiz-submissions/<int:quiz_id>/', views.SubmissionQuiz.as_view()),
 
     #path to submit quiz and update the quiz 
 
@@ -113,14 +116,6 @@ urlpatterns = [
     #path to show a student his/her hangman details
    
     path('hangman-submissions/<int:student_id>/<int:hangman_id>',views.FetchSubmissionHangman.as_view()),
-
-
-
-
-
-    
-
-
 
 
 

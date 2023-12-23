@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 const baseUrl = 'http://127.0.0.1:8000/api/quiz/'
 
@@ -14,7 +14,7 @@ function SetMcq() {
 
   const {module_id} = useParams();
   const [quizData, setQuizData] = useState([]);
-
+  const navigate = useNavigate();
   const [submitQuizData, setsubmitQuizData] = useState({
 
     title: '',
@@ -77,11 +77,11 @@ function SetMcq() {
             toast:true,
             timer:3000,
             timerProgressBar: true,
-            showConfirmButton: false
+            showConfirmButton: false,
     
            })
         
-      
+          navigate(`/teacher/courses`)
   
           setsubmitQuizData({
   

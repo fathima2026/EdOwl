@@ -17,7 +17,8 @@ const Topics = () => {
   const[topicData, setTopicData]=useState([]);
   const[studentList, setStudentList]=useState([]);
   const[assignmentList, setAssignmentList]=useState([]);
-  const [hangmanList, setHangmanList] = useState([])
+  const [hangmanList, setHangmanList] = useState([]);
+  const [quizList, setQuizList] = useState([])
 
   const[totalResult, setTotalResult]=useState(0);
   const {module_id} = useParams()
@@ -46,6 +47,16 @@ const Topics = () => {
       catch(error){
        console.log(error)
       }
+
+      try{
+        axios.get(baseUrl+'/module-quiz/'+module_id).then((response)=>{
+   
+         setQuizList(response.data); 
+   
+        });}
+        catch(error){
+         console.log(error)
+        }
 
       try{
 
@@ -157,11 +168,11 @@ const Topics = () => {
   }
   return (
     <div className="row" style={{marginBottom:'20px'}}>
-    <aside className='col-3'>
+    <aside className='col-2'>
     <Sidebar/>
     </aside>
     
-    <section className='col-8' style={{backgroundColor: '#eee'}}>
+    <section className='col-10' style={{backgroundColor: 'white'}}>
    
 
     <Tabs
@@ -255,6 +266,22 @@ const Topics = () => {
 
       <Tab eventKey="Quiz" title="Quiz">
         <Button as={Link} to={`/teacher/setquiz/`+module_id}>Set Quiz</Button>
+        <div style={{overflowX:'hidden',overflowY:'auto',overflow:'auto',height:'600px'}}>
+    
+
+       {quizList.map((quiz,index)=>
+         <Card  border="warning" style={{marginBottom:'20px'}}>
+            <Card.Body>
+        <Card.Subtitle className="mb-2 text-muted">{quiz.title}</Card.Subtitle>
+        <Card.Text>
+          {quiz.description}
+        </Card.Text>
+        <Card.Link as={Link} to={`/teacher/quiz/`+quiz.id} href="#">View Quiz</Card.Link>
+        <Card.Link style={{color:'red'}} onClick={()=>handleAssignmentDelete(quiz.id)} href="#">Delete Quiz</Card.Link>
+      </Card.Body>
+       </Card>
+     )}
+      </div>
       </Tab>
       <Tab eventKey="Game" title="Game">
         <Button variant='warning' as={Link} to={`/teacher/sethangman/`+module_id}>Set Hangman</Button>

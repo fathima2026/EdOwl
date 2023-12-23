@@ -99,11 +99,11 @@ const CourseTopicStudent = () => {
 
   return (
     <div className="row">
-    <aside className='col-3'>
+    <aside className='col-2'>
     <Sidebar/>
     </aside>
     
-    <section className='col-8' style={{backgroundColor: '#eee'}}>
+    <section className='col-10' style={{backgroundColor: 'white'}}>
     <div className="container">
     <div className="row">
 

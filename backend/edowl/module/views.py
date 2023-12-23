@@ -7,7 +7,8 @@ from . import models
 from users.serializers import StudentSerializer
 from users.models import Student, BaseUser, Teacher
 # Create your views here.
-
+from rest_framework.views import APIView
+from rest_framework.response import Response
 # Create your views here.
 class ModuleList(generics.ListCreateAPIView):
    queryset = models.Module.objects.all()
@@ -79,9 +80,28 @@ class EnrolledModuleList(generics.ListCreateAPIView):
       modules = models.StudentCourseEnrollment.objects.filter(student=student)
       modulesarray = [];
       for val in modules:
+       tasks = models.Assignment.objects.filter(module=val.course).count() + models.Quiz.objects.filter(module=val.course).count() + models.Hangman.objects.filter(module=val.course).count()
+       studenttasks = models.AssignmentSubmission.objects.filter(student=student).count()+models.QuizSubmission.objects.filter(student=student).count()+models.HangmanSubmission.objects.filter(student=student).count()
+       if tasks==0:
+          val.course.tasks=0
+       else:
+          val.course.tasks=studenttasks/tasks
        modulesarray.append(val.course)
       return modulesarray
    
+
+class EnrolledModuleListTask(APIView):
+
+   def get(self,request,student_id):
+      student_id=student_id
+      student = models.Student.objects.get(pk=student_id)
+      modules = models.StudentCourseEnrollment.objects.filter(student=student)
+      modulesarray = [];
+      for val in modules:
+       tasks = models.Assignment.objects.filter(module=val.course).count() + models.Quiz.objects.filter(module=val.course).count()
+       val.course.title=tasks
+       modulesarray.append(val.course)
+      return modulesarray
 
 class EnrolledStudentList(generics.ListAPIView):
    serializer_class = StudentSerializer
@@ -168,6 +188,14 @@ class ModuleQuizList(generics.ListAPIView):
       module_id=self.kwargs['module_id']
       module = models.Module.objects.get(pk=module_id)
       return models.Quiz.objects.filter(module=module)
+   
+class SubmissionQuiz(generics.ListAPIView):
+   serializer_class = QuizSubmissionSerializer
+
+   def get_queryset(self):
+      quiz_id=self.kwargs['quiz_id']
+      quiz = models.Quiz.objects.get(pk=quiz_id)
+      return models.QuizSubmission.objects.filter(quiz=quiz)
    
 class QuizSubmissionList(generics.ListCreateAPIView):
    queryset = models.QuizSubmission.objects.all()

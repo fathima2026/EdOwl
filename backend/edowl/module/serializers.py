@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from . import models
 from users.models import Student
+
+
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.Module
-        fields = ['id','title', 'description', 'teacher','code']
+        fields = ['id','title', 'description', 'teacher','code','tasks']
 
 class TopicSerializer(serializers.ModelSerializer):
     class Meta :

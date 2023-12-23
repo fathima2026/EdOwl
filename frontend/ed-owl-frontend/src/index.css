@@ -1,27 +1,27 @@
+
 :root{
     scroll-behavior: smooth;
     font-family: Quicksand;
     
     background-repeat: no-repeat;
-    background: var(--GradientLighterBlue);
   
     --LightGray: rgb(230, 230, 230);
     
   
-    --LighterBlue: rgb(194,214,255);
-    --LightBlue:rgb(1,147,207); 
-    --LightBlueBlendForGradient:rgb(4, 151, 210); 
+    --LighterBlue: #c2d6ff;
+    --LightBlue:rgb(7, 180, 249); 
+    --LightBlueBlendForGradient:#0497d2; 
     
     
-    --MediumBlue: rgb(1, 126, 207);
-    --DarkBlue: rgb(7, 101, 195);
-    --GradientLighterBlue: linear-gradient(0deg, rgba(1,126,207,1) 0%, rgba(1,147,207,1) 100%);
+    --MediumBlue: #017ecf;
+    --DarkBlue: #0765c3;
+    --GradientLighterBlue: linear-gradient(0deg, #017ecf 0%, rgba(1,147,207,1) 100%);
     --GradientDarkerBlue: linear-gradient(0deg, rgba(7,101,195,1) 0%, rgba(0,72,144,1) 100%);
     --GradientRoundLighterBlue: radial-gradient(circle, rgb(1, 100, 166) 0%, rgb(4, 163, 226) 100%);
     --GradientRoundLighterBlueReversed: radial-gradient(circle, rgb(4, 163, 226) 0%, rgb(1, 100, 166)  140%);
     --GradientRoundLighterBlueReversed2: radial-gradient(circle, rgb(4, 163, 226) 60%, rgb(1, 100, 166)  140%);
   
-    --LightYellow: rgb(252,177,52);
+    --LightYellow: #fcb134;
     --MediumYellow: rgb(194,136,41);
     --AlternateYellow:rgb(236, 173, 72);
     --GradientYellow: linear-gradient(0deg, rgba(194,136,41,1) 0%, rgba(252,177,52,1) 100%);
@@ -69,7 +69,6 @@
     padding: 0;
   
     background-repeat: no-repeat;
-    background: var(--GradientLighterBlue);
   
     --LighterBlue: rgb(194,214,255);
     --LightBlue:rgb(1,147,207); 
@@ -374,34 +373,6 @@
     }
   }
  
-.sidenav {
-  width: 230px;
-  z-index: 1;
-  top: 20px;
-  left: 10px;
-  background:white;
-  overflow-x: hidden;
-  padding: 8px 0;
-  height:800px;
-}
-
-.sidenav a {
-  margin-top: 15px;
-  margin-right: 20px;
-  padding: 10px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: black;
-  display: block;
-  border-radius: 0px 15px 10px 5px;
-  text-align: left;
-}
-
-
-
-.sidenav a:hover {
-  color: #064579;
-}
 
 .main {
   margin-left: 140px; /* Same width as the sidebar + left position in px */

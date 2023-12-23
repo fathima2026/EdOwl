@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios'
 import Swal from 'sweetalert2'
-
+import ProgressBar from 'react-bootstrap/ProgressBar';
 const baseUrl = 'http://127.0.0.1:8000/api'
 const StudentCourses = () => {
 
@@ -122,7 +122,7 @@ const StudentCourses = () => {
      axios.get(baseUrl+'/student-module/'+id).then((response)=>{
 
       setModuleData(response.data); 
-
+      console.log(response.data)
      });}
      catch(error){
       console.log(error)
@@ -135,15 +135,14 @@ const StudentCourses = () => {
 
   const studentLoginStatus = localStorage.getItem('studentLoginStatus')
 
-  console.log("moduleData")
 
   return (
     <div className="row">
-    <aside className='col-3'>
+    <aside className='col-2'>
     <Sidebar/>
     </aside>
     
-    <section className='col-8' style={{backgroundColor: 'white',height:'800px',overflowX:'hidden',overflowY:'auto',overflow:'auto'}}>
+    <section className='col-10' style={{backgroundColor: 'white',height:'800px',overflowX:'hidden',overflowY:'auto',overflow:'auto'}}>
     <div className="container py-5">
     <div className="row">
     
@@ -189,10 +188,13 @@ const StudentCourses = () => {
       
        <Card style={{ margin:'10px',width: '18rem' }}>
        <Card.Body>
+
+       <ProgressBar variant="danger" animated now={module.tasks*100} label={`${module.tasks*100}%`} />
         <Card.Title>{module.title}</Card.Title>
+
         <Card.Subtitle className="mb-2 text-muted">{module.code}</Card.Subtitle>
         <Card.Text>
-          {module.description}
+        {module.description.substring(0, 100)}...
         </Card.Text>
         <Card.Link style={{ color:'green' }} as={Link} to={`/student/topic/`+module.id}>View Module</Card.Link>
         <Card.Link style={{ color:'blue' }} as={Link} to={`/teacher/edit-module/`+module.id}>Assignments</Card.Link>

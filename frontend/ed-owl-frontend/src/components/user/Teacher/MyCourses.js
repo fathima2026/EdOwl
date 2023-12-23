@@ -31,11 +31,11 @@ const MyCourses = () => {
   console.log(moduleData)
   return (
     <div className="row">
-    <aside className='col-3'>
+    <aside className='col-2'>
     <Sidebar/>
     </aside>
     
-    <section className='col-8' style={{backgroundColor: '#eee'}}>
+    <section className='col-10' style={{backgroundColor: 'white'}}>
     <div className="container py-5">
     <div className="row">
 
@@ -47,15 +47,16 @@ const MyCourses = () => {
     
       {moduleData.map((module,index)=>
       
-       <Card style={{ margin:'10px',width: '18rem' }}>
-       <Card.Body>
-        <Card.Title>{module.title}</Card.Title>
+       <Card style={{height:'auto', margin:'10px',width: '18rem',border:'1px solid', borderColor:'rgb(7, 101, 195', height:'250px'}}>
+       <Card.Body style={{height:'auto'}}>
+        
+        <Card.Title style={{ color:'blue' , fontSize:'18px'}} as={Link} to={`/teacher/topic/`+module.id}>{module.title}</Card.Title>
+        <hr />
         <Card.Subtitle className="mb-2 text-muted">{module.code}</Card.Subtitle>
-        <Card.Text>
-          {module.description}
+        <Card.Text style={{marginBottom:'3px'}}>
+          {module.description.substring(0, 70)}...
         </Card.Text>
-        <Card.Link style={{ color:'green' }} as={Link} to={`/teacher/topic/`+module.id}>View Module</Card.Link>
-        <Card.Link style={{ color:'blue' }} as={Link} to={`/teacher/edit-module/`+module.id}>EDIT Module</Card.Link>
+        <Card.Link style={{ color:'green' }} as={Link} to={`/teacher/edit-module/`+module.id}>Edit Module</Card.Link>
         <Card.Link  style={{ color:'red' }} as={Link} to={`/teacher/delete-module/`+module.id}>Delete Module</Card.Link>
        </Card.Body>
       </Card>
@@ -68,7 +69,6 @@ const MyCourses = () => {
         
       </div>
     </div>
-    <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to="teacher/add-course" variant="success">Add courses!</Button>{' '}
   </section>
     
   

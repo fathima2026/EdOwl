@@ -153,7 +153,7 @@ const StudentAssignment = () => {
                 
                   if(response.data.bool){
                     
-                    axios.get(baseUrl+'/submissions/'+student_id+'/'+assignment_id).then((response)=>{
+                    axios.get(baseUrl+'/assignment-submissions/'+student_id+'/'+assignment_id).then((response)=>{
 
                       console.log(response.data)
                       setMySubmissionData(
@@ -200,10 +200,10 @@ const StudentAssignment = () => {
         ];
       return (
         <div className='row' style={{height:'auto'}}>
-        <aside className='col-3'>
+        <aside className='col-2'>
         <Sidebar/>
         </aside>
-        <section className='col-8' style={{backgroundColor: '#eee',height:'auto'}}>
+        <section className='col-10' style={{backgroundColor: 'white',height:'auto'}}>
         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
           <Tab eventKey="home" title="Assignment Detail">
            <section style={{textAlign:'left'}}>

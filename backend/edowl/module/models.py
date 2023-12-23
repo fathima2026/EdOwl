@@ -10,7 +10,7 @@ class Module(models.Model):
     description = models.TextField()
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     code = models.CharField(max_length=255)
-    
+    tasks = models.DecimalField(decimal_places=1,max_digits=5,default=0,blank=True,null=True)
     def __str__(self):
         return self.title
 

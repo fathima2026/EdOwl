@@ -203,11 +203,11 @@ const ViewAssignment = () => {
       
   return (
     <div className='row' style={{height:'auto'}}>
-    <aside className='col-3'>
+    <aside className='col-2'>
     <Sidebar/>
     </aside>
-    <section className='col-8' style={{backgroundColor: '#eee'}}>
-    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+    <section className='col-10' style={{backgroundColor: 'white'}}>
+    <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="home" title="Assignment Detail">
        <section style={{textAlign:'left'}}>
           <Card style={{ height: 'auto' }}>
@@ -236,12 +236,6 @@ const ViewAssignment = () => {
       </Card.Body>
    
     </Card>
-
-   
-
-     <DocViewer documents={docs} style={{width: 800, height: 700, margin: 'auto'}} pluginRenderers={DocViewerRenderers} />;
-
-     {/* <div>Files <img src={assignmentData.image} alt="" /></div> */}
 
        </section>
       </Tab>
