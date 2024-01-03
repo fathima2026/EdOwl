@@ -1,10 +1,6 @@
 from django.db import models
 from users.models import Teacher, Student
 
-# Create your models here.
-
-#returns all modules
-
 class Module(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()

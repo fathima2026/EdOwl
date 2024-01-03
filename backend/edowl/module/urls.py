@@ -117,6 +117,8 @@ urlpatterns = [
    
     path('hangman-submissions/<int:student_id>/<int:hangman_id>',views.FetchSubmissionHangman.as_view()),
 
+    # path('hangman-rank/<int:hangman_id>',views.FetchHangmanRank)
+
 
 
 

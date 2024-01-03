@@ -71,10 +71,9 @@ const LeaderBoard = () => {
 
     
   return (
-   <div style={{backgroundColor:'white', margin:'100px',width:'70%',marginLeft:'200px',borderRadius:'30px', height:'600px',overflowY:'auto'}}>
+   <div style={{backgroundColor:'white', margin:'100px',width:'70%',marginLeft:'200px', height:'600px',overflowY:'auto'}}>
     <Leaderboard 
    className='max-w-4xl' //tailwind class (optional)
-   theme='amber' //leaderboard theme. see docs for accepted values (optional)
    scoringMetric="users" //the property you wanna rank your data by (required)
    id="name" //the property you wanna id each item in your data by (required)
    cell1="twitter_handle" //the first cell for your board (optional)

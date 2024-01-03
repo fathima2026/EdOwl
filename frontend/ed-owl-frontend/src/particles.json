@@ -1,6 +1,6 @@
 {
   "background": {
-    "color": "white"
+    "color": "#000000"
   },
   "interactivity": {
     "events": {
@@ -26,10 +26,10 @@
   },
   "particles": {
     "color": {
-      "value": "#0497d2"
+      "value": "#FFFFFF"
     },
     "links": {
-      "color": "#0497d2",
+      "color": "#FFFFFF",
       "distance": 150,
       "enable": true,
       "opacity": 1,

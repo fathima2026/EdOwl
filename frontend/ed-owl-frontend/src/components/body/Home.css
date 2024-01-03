@@ -1,3 +1,4 @@
+
 h2 {
   font-size: 2em;
   font-weight: 700;
@@ -9,16 +10,23 @@ p {
 }
 
 .hero{
-
+  background-image: url('bg19.svg');
+  background-size:auto;
   width: 100%;
   height: 700px;
-  background-image: url('bg.png');
+  color: white;
+  background-repeat: no-repeat;
 }
+.shake{
+  background-size: contain;
+}
+
 
 .intro{
   margin-top: 100px;
   margin-left: 30px;
   text-align: left;
+
 }
 
 .intro h1{
@@ -41,21 +49,16 @@ p {
 .home section {
   padding: 5em 0em 5em 0em;
 }
-.home .home-heading {
-  margin: 1em auto;
+.home-heading {
   padding: 0.3em;
   text-align: center;
   margin-left: 2em;
   margin-right: 2em;
+  color: white;
+  font-size: 50px;font-family: "Georgia", Times, serif;
+  font-weight:500;
 }
-.home .home-description {
-  display: inline-block;
-  width: 70%;
-  font-size: 1.2em;
-}
-.home .hero-transition {
-  display: block;
-}
+
 .home .hero-section {
   padding-top: 4em;
   align-items: center;
@@ -70,33 +73,42 @@ p {
 .home .hero-section .edowl-logo:hover {
   border: 5px DOUBLE white;
 }
-.home .hero-section .btn-dark {
-  width: 5em;
-  color: white;
-  transition: transform 0.6s;
+
+.list-card{
+  /* background-image: url('bg18.svg'); */
+  background-color: black;
+  padding-bottom: 90px;
+
 }
-.home .hero-section .btn-dark:hover {
-  border-color: white;
+
+.list-card .row{
+  padding-top: 100px;
+  margin-left: 90px;
+  border-radius: 50px;
+  margin-right: 90px;
 }
-.home .hero-section .btn-info {
-  margin: 2em;
-  transition: transform 0.6s;
+
+.card-info{
+  text-align: left;
+  color:white;
 }
-.home .hero-section .btn-info:hover {
-  border-color: white;
+
+.card-info h2{
+  text-align: left;
+  margin-top: 100px;
+  font-size: xx-large;
 }
-.home .hero-section .btn-red {
-  transition: transform 0.6s;
-  background-color: rgb(230, 80, 80);
-  width: 5em;
-  color: white;
+
+.card-info p{
+  font-size: larger;
+
 }
-.home .hero-section .qr-code-button:hover {
-  border-color: white;
-}
+
+.card-info button{
+margin-left: 10px;}
+
 .home .features-section {
   padding-top: 1em;
-  background-color:white;
   border-radius: 30px;
   color: white;
   margin-bottom: 4em;
@@ -120,6 +132,7 @@ p {
   color: black;
   max-width: 400px;
   border-radius: 2em;
+  border: 8px solid black;
   background: white;
   margin-bottom: 0.7em;
   border: 0;
@@ -135,82 +148,9 @@ p {
   margin: 0;
   margin-bottom: 30px;
 }
-.home .contact-Section {
-  max-width: 700px;
-  padding: 3em;
-  margin-bottom: 5em;
-  padding-top: 2em;
-  margin: 2em auto;
-  text-align: start;
-  padding: 0;
-}
-.home .contact-Section .contact-us-form {
-  width: 90%;
-  margin: auto;
-}
-.home .contact-Section .contact-us-form .contact-us-title {
-  margin-bottom: 0;
-}
-.home .contact-Section .contact-us-form label {
-  display: block;
-  font-size: 1.5em;
-  margin: 0;
-  margin-bottom: 0.5em;
-}
-.home .contact-Section .contact-us-form input, .home .contact-Section .contact-us-form textarea {
-  color: white;
-  background: var(--GradientYellow);
-  font-size: 1.2em;
-  width: 100%;
-  padding: 0.8em;
-  margin-bottom: 0.6em;
-  border-radius: 1em;
-  border: 5px outset rgb(175, 175, 175);
-  border-style: outset;
-  box-sizing: border-box;
-}
-.home .contact-Section .contact-us-form ::-moz-placeholder {
-  color: white;
-}
-.home .contact-Section .contact-us-form :-ms-input-placeholder {
-  color: white;
-}
-.home .contact-Section .contact-us-form ::placeholder {
-  color: white;
-}
-.home .contact-Section .contact-us-form .contact-us-button {
-  height: 50px;
-  width: 100%;
-}
-.home .contact-Section .contact-us-form-sucess {
-  text-align: center;
-  margin: 2em auto;
-  margin-top: 4em;
-  max-width: 400px;
-}
-.home .contact-Section .contact-details {
-  width: 80%;
-  text-align: center;
-  border-radius: 2.5em;
-  margin: 2em auto;
-  margin-top: 5em;
-  margin-bottom: 5em;
-  background: var(--GradientYellow);
-  color: white;
-}
-.home .contact-Section .contact-details h2 {
-  font-size: 1.6em;
-}
-.home .contact-Section .contact-details p {
-  font-size: 0.9em;
-  margin-bottom: 0;
-}
-.home .contact-Section .contact-details .map {
-  margin: 1em;
-  margin-top: 1.3em;
-  border-radius: 1.5em;
-  width: 90%;
-}
+
+.cardbtn{  border-color: black;
+  }
 
 @media only screen and (max-width: 600px) {
   .home .hero-section {

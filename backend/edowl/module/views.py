@@ -259,3 +259,12 @@ class FetchSubmissionHangman(generics.ListAPIView):
       student = models.Student.objects.get(pk=student_id)
       hangman = models.Hangman.objects.get(pk=hangman_id)
       return models.HangmanSubmission.objects.filter(hangman=hangman)
+   
+
+# def FetchHangmanRank(request,hangman_id):
+#    hangman = models.Hangman.objects.get(pk=hangman_id)
+#    items = models.HangmanSubmission.objects.filter(hangman=hangman)
+#    studentarray = []
+#    for item in items :
+#       studentarray.append(item.student)
+#    return JsonResponse({'student': studentarray})

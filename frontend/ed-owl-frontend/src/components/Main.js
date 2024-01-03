@@ -65,13 +65,15 @@ const Main = () => {
 
         <Route path = "/student-logout" element={<StudentLogout/>}/>
 
-        <Route element = {<RequireAuth allowedRoles={["teacher","user","student"]}/>} >
+        <Route path = "games" element={<AllGames/>}/>
+
+        {/* <Route element = {<RequireAuth allowedRoles={["teacher","user","student"]}/>} >
 
         <Route path = "games" element={<AllGames/>}/>
 
 
 
-        </Route>
+        </Route> */}
 
         {/* Protect routes */}
         <Route element={<PersistLogin/>} >
