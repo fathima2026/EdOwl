@@ -1,91 +1,55 @@
 import React from 'react'
 import { Leaderboard } from 'flywheel-leaderboard'
 import "./LeaderBoard.css"
-const data = [
-  {
-    name: 'dylan',
-    twitter_handle: '@dxlantxch',
-    github_username: '@dylanintech',
-    users: 40,
-    twitter_followers: 1055,
-    github_stars: 5,
-  },
-  {
-    name: 'arib',
-    twitter_handle: '@aribk24',
-    github_username: '@Aribk7',
-    users: 105000,
-    twitter_followers: 4949,
-    github_stars: 4,
-  },
-  {
-    name: 'aleem',
-    twitter_handle: '@aleemrehmtulla',
-    github_username: '@aleemrehmtulla',
-    users: 50000,
-    twitter_followers: 4107,
-    github_stars: 200,
-  },
-  {
-    name: 'rochan',
-    twitter_handle: '@0xSxlty',
-    github_username: '@0xSxlty',
-    users: 40000,
-    twitter_followers: 2226,
-    github_stars: 4,
-  },
-  {
-    name: 'aleem',
-    twitter_handle: '@aleemrehmtulla',
-    github_username: '@aleemrehmtulla',
-    users: 50000,
-    twitter_followers: 4107,
-    github_stars: 200,
-  },
-  {
-    name: 'rochan',
-    twitter_handle: '@0xSxlty',
-    github_username: '@0xSxlty',
-    users: 40000,
-    twitter_followers: 2226,
-    github_stars: 4,
-  },
-  {
-    name: 'aleem',
-    twitter_handle: '@aleemrehmtulla',
-    github_username: '@aleemrehmtulla',
-    users: 50000,
-    twitter_followers: 4107,
-    github_stars: 200,
-  },
-  {
-    name: 'rochan',
-    twitter_handle: '@0xSxlty',
-    github_username: '@0xSxlty',
-    users: 40000,
-    twitter_followers: 2226,
-    github_stars: 4,
-  }
-]
+import { useParams } from 'react-router-dom';
+import {useState,useEffect} from 'react'
+import axios from 'axios';
+
+const baseUrl = 'http://127.0.0.1:8000/api'
+
+// const data = [
+  
+// ]
 const LeaderBoard = () => {
 
-    
+  const {assignment_id} = useParams();
+
+  const [data, setData] = useState({});
+
+  useEffect(() =>{ 
+          
+    try{
+     axios.get(baseUrl+'/hangman-rank/'+1).then((response)=>{
+
+      setData( 
+          
+           response.data
+          
+      ); 
+      console.log(data.data)
+     });}
+     catch(error){
+      console.log(error)
+     } },[])
+
   return (
-   <div style={{backgroundColor:'white', margin:'100px',width:'70%',marginLeft:'200px', height:'600px',overflowY:'auto'}}>
-    <Leaderboard 
-   className='max-w-4xl' //tailwind class (optional)
-   scoringMetric="users" //the property you wanna rank your data by (required)
-   id="name" //the property you wanna id each item in your data by (required)
-   cell1="twitter_handle" //the first cell for your board (optional)
-   cell2="github_username" //...
-   cell3="users" //...
-   cell4="twitter_followers" //...
-   cell5="github_stars" //...
-   items={data} //the data you wanna use for your board. e.g. db response. (required)
-   > 
- </Leaderboard>
+   <div style={{backgroundColor:'white', margin:'100px',width:'70%',marginLeft:'200px', height:'auto',overflowY:'auto'}}>
+  {data && data.data ? (
+        <Leaderboard
+          className='max-w-4xl'
+          scoringMetric="points"
+          id="first_name"
+          cell1="last_name"
+          cell2="email"
+          cell3="points"
+          items={data.data}
+        >
+        </Leaderboard>
+      ) : (
+        <p>Loading...</p>
+      )}
  </div> 
-   
+  
   )
 }
 
