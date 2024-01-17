@@ -339,6 +339,62 @@ code {
   top: 10px;
 }
 
+.rank-table table tr{
+  background-color: #093f90;
+  color: white;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  border: 5px solid rgb(0, 0, 0) ;
+  
+}
+
+table td{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+
+th{
+  color: #fcb134;
+  background-color: black;
+  
+}
+
+.tab-rank-table table tr{
+  color: black;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  border: 2px solid rgb(0, 0, 0) ;
+  
+}
+
+.tab-rank-table{
+  padding-left: 90px;
+  border-collapse: collapse;
+
+}
+
+.rank-table{
+  margin-left: 180px;
+  border-collapse: collapse;
+
+}
+
+.leaderboard-container{
+  margin-top: 20px !important;
+  background-color: white;
+  width: 70% !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+  height: auto;
+  overflow-y: auto;
+  border-radius: 20px;
+}
+
+
+
 @media only screen and (max-width: 500px) {
   h2 {
     font-size: 0.9em;

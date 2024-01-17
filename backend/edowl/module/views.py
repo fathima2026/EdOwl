@@ -149,14 +149,24 @@ def fetch_submission_status(request,student_id,assignment_id):
 class AssignmentSubmissionList(generics.ListCreateAPIView):
    queryset = models.AssignmentSubmission.objects.all()
    serializer_class = AssignmentSubmissionSerializer
-
+from django.db.models import Count, Case, When, Value, IntegerField
 class SubmissionAssignment(generics.ListAPIView):
-   serializer_class = AssignmentAccessSerializer
+    serializer_class = AssignmentAccessSerializer
 
-   def get_queryset(self):
-      assignment_id=self.kwargs['assignment_id']
-      assignment = models.Assignment.objects.get(pk=assignment_id)
-      return models.AssignmentSubmission.objects.filter(assignment=assignment)
+    def get_queryset(self):
+        assignment_id = self.kwargs['assignment_id']
+        assignment = models.Assignment.objects.get(pk=assignment_id)
+
+        # Fetch assignment submissions and annotate with information about whether each submission is graded
+        submissions = models.AssignmentSubmission.objects.filter(assignment=assignment).annotate(
+            is_graded=Case(
+                When(marks__isnull=False, then=Value(True)),
+                default=Value(False),
+                output_field=IntegerField()
+            )
+        )
+
+        return submissions
    
 class SubmissionDetail(generics.RetrieveUpdateDestroyAPIView):
    queryset = models.AssignmentSubmission.objects.all()
@@ -277,3 +287,46 @@ def FetchHangmanRank(request,hangman_id):
       arr.append(data)
 
    return JsonResponse({'data': arr})
+
+from django.http import JsonResponse
+from django.db.models import Sum
+
+def FetchRank(request, module_id):
+    module = models.Module.objects.get(pk=module_id)
+
+    # Fetch all submissions related to the module
+    assignment_submissions = models.AssignmentSubmission.objects.filter(assignment__module=module)
+    quiz_submissions = models.QuizSubmission.objects.filter(quiz__module=module)
+    hangman_submissions = models.HangmanSubmission.objects.filter(hangman__module=module)
+
+    # Combine all submissions into a single list
+    all_submissions = list(assignment_submissions) + list(quiz_submissions) + list(hangman_submissions)
+
+    # Create a dictionary to store total points for each student
+    student_points = {}
+
+    # Calculate total points for each student
+    for submission in all_submissions:
+        student_id = submission.student.id
+
+        # If the student is not already in the dictionary, initialize their total points to 0
+        if student_id not in student_points:
+            student_points[student_id] = 0
+
+        # Add the points from the submission to the total points for the student (if marks is not None)
+        if submission.marks is not None:
+            student_points[student_id] += submission.marks
+
+    # Fetch student details and create the final array
+    student_array = []
+    for student_id, total_points in student_points.items():
+        student = models.Student.objects.get(pk=student_id)
+        data = {
+            'first_name': student.first_name,
+            'last_name': student.last_name,
+            'email': student.email,
+            'points': total_points,
+        }
+        student_array.append(data)
+
+    return JsonResponse({'data': student_array})

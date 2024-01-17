@@ -11,6 +11,8 @@ import Table from 'react-bootstrap/Table';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Swal from 'sweetalert2'
+import { Leaderboard } from 'flywheel-leaderboard'
+
 const baseUrl = 'http://127.0.0.1:8000/api'
 const CourseTopicStudent = () => {
  
@@ -22,7 +24,7 @@ const CourseTopicStudent = () => {
   const[totalResult, setTotalResult]=useState(0);
   const[gameTab, setGameTab]=useState(false);
   const {module_id} = useParams()
-
+  const [data, setData] = useState({});
 
   const handleClick= (e) => {
     if(e=='Game'){
@@ -93,7 +95,19 @@ const CourseTopicStudent = () => {
      }catch(error){
       console.log(error)
      }
-       
+     try{
+      axios.get(baseUrl+'/rank/'+module_id).then((response)=>{
+ 
+       setData( 
+           
+            response.data
+           
+       ); 
+       console.log(data.data)
+      });}
+      catch(error){
+       console.log(error)
+      }
 
    },[]);
 
@@ -180,6 +194,27 @@ const CourseTopicStudent = () => {
 
      )}
       </div>
+      
+        </Tab>
+        <Tab eventKey="rank" title="rank">
+        <div className='leaderboard-container'>
+    <p style={{fontSize:'40px'}}><img style={{width:'80px'}}src='/Image/badge.png'></img>LEADERBOARD<img style={{width:'80px'}}src='/Image/badge.png'></img></p>
+
+  {data && data.data ? (
+        <Leaderboard className='tab-rank-table' style={{marginLeft:'100px'}}
+          scoringMetric="points"
+          id=""
+          cell1="first_name"
+          cell2="last_name"
+          cell3="email"
+          cell4="points"
+          items={data.data}
+        >
+        </Leaderboard>
+      ) : (
+        <p>Loading...</p>
+      )}
+ </div> 
       
         </Tab>
         <Tab eventKey="Quiz" title="Quiz" >     

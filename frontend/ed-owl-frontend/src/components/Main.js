@@ -38,7 +38,7 @@ import Users from './user/Users'
 import Admin from './user/Admin'
 import ViewQuizTeacher from './user/Teacher/ViewQuiz'
 import PersistLogin from './user/PersistLogin'
-import LeaderBoard from './user/Student/LeaderBoard'
+import LeaderBoard from './user/Student/LeaderBoard/LeaderBoard'
 const Main = () => {
   return (
 

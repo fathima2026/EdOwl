@@ -257,8 +257,13 @@ const ViewAssignment = () => {
                       
                       <span style={{float:'right'}} >
 
-                        <button id="submit-assignment" onClick={()=>handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'4BB543'}}>Grade</button>
-                        
+                        {!submission.is_graded && <>
+                          <button id="submit-assignment" onClick={()=>handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'#0765c3'}}>Grade</button>
+                        </>}
+                        {submission.is_graded && <>
+                          <button id="submit-assignment" onClick={()=>handleGrade(submission.id)} style={{borderRadius:'5px',backgroundColor:'#fcb134'}}>Update</button>
+                        </>}
+
                       </span>
 
                       {submission.marks!=null && <>

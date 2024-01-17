@@ -4,7 +4,7 @@ import "./LeaderBoard.css"
 import { useParams } from 'react-router-dom';
 import {useState,useEffect} from 'react'
 import axios from 'axios';
-
+import Sidebar from '../../Sidebar';
 const baseUrl = 'http://127.0.0.1:8000/api'
 
 // const data = [
@@ -33,15 +33,21 @@ const LeaderBoard = () => {
      } },[])
 
   return (
-   <div style={{backgroundColor:'white', margin:'100px',width:'70%',marginLeft:'200px', height:'auto',overflowY:'auto'}}>
+    <div className="row">
+    <aside className='col-2'>
+    <Sidebar/>
+    </aside>
+    <div className='col-5 leaderboard-container'>
+    <p style={{fontSize:'80px'}}><img style={{width:'80px'}}src='/Image/badge.png'></img>LEADERBOARD<img style={{width:'80px'}}src='/Image/badge.png'></img></p>
+
   {data && data.data ? (
-        <Leaderboard
-          className='max-w-4xl'
+        <Leaderboard className='rank-table'
           scoringMetric="points"
-          id="first_name"
-          cell1="last_name"
-          cell2="email"
-          cell3="points"
+          id=""
+          cell1="first_name"
+          cell2="last_name"
+          cell3="email"
+          cell4="points"
           items={data.data}
         >
         </Leaderboard>
@@ -49,6 +55,8 @@ const LeaderBoard = () => {
         <p>Loading...</p>
       )}
  </div> 
+    </div>
+   
   
   )
 }

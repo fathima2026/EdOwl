@@ -28,12 +28,22 @@ class AssignmentSubmissionSerializer(serializers.ModelSerializer):
         model = models.AssignmentSubmission
         fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks']
 
-class AssignmentAccessSerializer(serializers.ModelSerializer):
-    class Meta :
-        model = models.AssignmentSubmission
-        fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks']
-        depth=1
+# class AssignmentAccessSerializer(serializers.ModelSerializer):
+#     class Meta :
+#         model = models.AssignmentSubmission
+#         fields = ['id','assignment','student','file','completed_time','completed_date','marks','remarks','is_graded']
+#         depth=1
 
+class AssignmentAccessSerializer(serializers.ModelSerializer):
+    is_graded = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = models.AssignmentSubmission
+        fields = ['id', 'assignment', 'student', 'file', 'completed_time', 'completed_date', 'marks', 'remarks', 'is_graded']
+        depth=1
+    def get_is_graded(self, obj):
+        return obj.marks is not None
+    
 class QuizSerializer(serializers.ModelSerializer):
     class Meta :
         model = models.Quiz
