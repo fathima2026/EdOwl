@@ -69,6 +69,8 @@ const Login = () => {
 
                   localStorage.setItem('studentLoginStatus', true)
                   localStorage.setItem('id', response.data.id)
+                  localStorage.setItem('first_name', response.data.first_name)
+
                   console.log(JSON.stringify(response?.data));
                   console.log(JSON.stringify(response));
                   
@@ -110,7 +112,8 @@ const Login = () => {
                     navigate('/user')
                   }
                   else{
-                  navigate('/'+role+'/courses')
+               
+                  window.location.href='/'+role+'/courses'
 
                   }
                   }
@@ -214,7 +217,7 @@ const Login = () => {
             <MDBBtn onClick={handleSubmit} size='md'>
               Login
             </MDBBtn>
-
+{/* 
             <hr className="my-4" />
 
             <MDBBtn className="mb-2 w-70" size="md" style={{backgroundColor: '#dd4b39', width:'70%', margin:'auto',fontSize:'80%'}}>
@@ -225,7 +228,7 @@ const Login = () => {
             <MDBBtn className="mt-4 mb-4 w-70" size="md" style={{backgroundColor: '#3b5998', width:'70%', margin:'auto', fontSize:'80%'}}>
               <MDBIcon fab icon="facebook-f" className="mx-2"/>
               Sign in with facebook
-            </MDBBtn>
+            </MDBBtn> */}
 
           </MDBCardBody>
         </MDBCard>

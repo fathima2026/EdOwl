@@ -12,8 +12,10 @@ const StudentLogout = () => {
 
         localStorage.removeItem('studentLoginStatus')
         localStorage.removeItem('refreshToken')
+        localStorage.removeItem('first_name')
 
-        navigate('/role') 
+
+        window.location.href='/role'
 
     },[])
     

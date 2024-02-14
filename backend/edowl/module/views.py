@@ -8,6 +8,10 @@ from users.serializers import StudentSerializer
 from users.models import Student, BaseUser, Teacher
 # Create your views here.
 from rest_framework.views import APIView
+from django.views.decorators.http import require_POST
+import json  # Add this line
+from .models import StudentCourseEnrollment  # Add this import
+
 from rest_framework.response import Response
 # Create your views here.
 class ModuleList(generics.ListCreateAPIView):
@@ -330,3 +334,19 @@ def FetchRank(request, module_id):
         student_array.append(data)
 
     return JsonResponse({'data': student_array})
+
+@csrf_exempt
+@require_POST
+def remove_student_from_course(request):
+    try:
+        data = json.loads(request.body)
+        student_id = data.get('student_id')
+        module_id = data.get('module_id')
+
+        # Assuming you have a model named StudentCourseEnrollment
+        enrollment = StudentCourseEnrollment.objects.get(student_id=student_id, course_id=module_id)
+        enrollment.delete()
+
+        return JsonResponse({'success': True, 'message': 'Student removed successfully'})
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': str(e)})

@@ -22,11 +22,15 @@ const useAxiosPrivate = () => {
             response => response,
             async (error) => {
                 const prevRequest = error?.config;
-                if (error?.response?.status === 401 && !prevRequest?.sent) {
-                    prevRequest.sent = true;
+                try {
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
+                } catch (refreshError) {
+                    console.error("Failed to refresh token:", refreshError);
+                    // Clear auth data and refresh the page if refresh token fails
+                    localStorage.removeItem('username'); // Remove username from local storage
+                    window.location.reload(); // Refresh the page
                 }
                 return Promise.reject(error);
             }

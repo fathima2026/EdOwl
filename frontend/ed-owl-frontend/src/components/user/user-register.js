@@ -5,7 +5,10 @@ import {faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Swal from 'sweetalert2'
 import { useParams, useNavigate } from 'react-router-dom';
-
+import Lottie from "lottie-react"
+import reganimation from "../user/animation/reganimation.json"
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import {
   MDBBtn,
   MDBContainer,
@@ -149,63 +152,16 @@ useEffect(() => {
     }
 }
 
-  // const [studentData, setStudentData] = useState({
-
-  //   first_name: '',
-  //   last_name: '',
-  //   email: '',
-  //   password:'',
-  //   contact: '',
-  //   status:''
-  // });
-
-  // const handleChange=(event) => {
-  //   console.log(event.target.name,event.target.value)
-  //   setStudentData({
-  //     ...studentData,
-  //     [event.target.name]:event.target.value
-  //   })
-  // }
-
-  // const handleSubmit=(event) => {
-  //   const studentFormData = new FormData();
-   
-  //   studentFormData.append("first_name", firstname)
-  //   studentFormData.append("last_name", lastname)
-  //   studentFormData.append("email", email)
-  //   studentFormData.append("password", pwd)
-  
-  //   try{
-  //   axios.post(baseUrl,studentFormData).then((response)=>{
-      
-  //     console.log(response.data)
-      
-  //   //   setStudentData({
-
-  //   // first_name: '',
-  //   // last_name: '',
-  //   // email: '',
-  //   // password:'',
-  //   // contact: '',
-  //   // status:'success'
-  
-
-  //   // });
-  //   }) }catch(e){
-  //    console.log(e);
-  //   //  setStudentData({status:'e'})
-  //   }
-  // }
   const studentLoginStatus = localStorage.getItem('studentLoginStatus')
  
   return (
-    <MDBContainer fluid style={{width: '60%',height:'700px'}}>
+    <MDBContainer fluid style={{width: '57%',height:'700px'}}>
 
     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
      <MDBCard className='text-black m-5' style={{borderRadius: '25px'}}>
        <MDBCardBody>
          <MDBRow>
-           <MDBCol md='10' lg='6' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
+           <MDBCol md='10' lg='5' className='order-2 order-lg-1 d-flex flex-column align-items-center'>
  
              <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
  
@@ -309,15 +265,13 @@ useEffect(() => {
                              Must match the first password input field.
                          </p>
 
-                         <MDBCheckbox name='flexCheck' value='teacher' id='flexCheckDefault' label='Teacher' />
-                         <MDBCheckbox name='flexCheck' value='student' id='flexCheckChecked' label='Student' defaultChecked />          
-                      
+                     
              <MDBBtn onClick={handleSubmit} disabled={!validEmail || !validFirstName || !validLastName || !validPwd || !validMatch ? true : false} className='mb-4' size='lg'>Register</MDBBtn>
  
            </MDBCol>
  
-           <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
-             <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp' fluid/>
+           <MDBCol  lg='7' className='order-1 order-lg-2 d-flex align-items-center'>
+           <Lottie animationData={reganimation}></Lottie>
            </MDBCol>
  
          </MDBRow>

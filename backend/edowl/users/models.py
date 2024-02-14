@@ -40,5 +40,5 @@ class Teacher(BaseUser):
     # Additional fields specific to teachers
 
 class Student(BaseUser):
-    is_student = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=True)
     # Additional fields specific to students

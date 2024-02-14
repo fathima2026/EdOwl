@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
-
 from djoser.views import UserViewSet as DjoserUserViewSet
 from rest_framework import generics
 from .serializers import TeacherSerializer, StudentSerializer, YourCustomTokenObtainPairSerializer
@@ -9,8 +8,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework import status
-
-
 
 User = get_user_model()
 
@@ -54,6 +51,7 @@ def student_login(request):
             'id': student.id,
             'access': str(tokens['access']),
             'refresh': str(tokens['refresh']),
+            'first_name': student.first_name
         })
     else:
         return Response({'bool': False, 'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -77,6 +75,7 @@ def teacher_login(request):
             'id': teacher.id,
             'access': str(tokens['access']),
             'refresh': str(tokens['refresh']),
+            'first_name': teacher.first_name
         })
     else:
         return Response({'bool': False, 'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

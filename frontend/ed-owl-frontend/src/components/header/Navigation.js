@@ -6,6 +6,13 @@ import './Navigation.css'
 import { Link } from 'react-router-dom';
 const Navigation = () => {
   const studentLoginStatus = localStorage.getItem('studentLoginStatus')
+  const first_name = localStorage.getItem('first_name')
+  const userRole = localStorage.getItem('role');
+
+  // Determine the link based on the user's role
+  const coursesLink = userRole === 'teacher' ? '/teacher/courses' : '/student/courses';
+
+  const username = first_name ? first_name : "user"
  
   return (
     <Navbar expand="lg" className="bg-body-tertiary" collapseOnSelect>
@@ -22,14 +29,14 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link style={{color:'black',fontSize:'18px'}} href="#features">Home</Nav.Link>
+          <Nav.Link style={{color:'black',fontSize:'18px'}} href="/">Home</Nav.Link>
           <Nav.Link style={{color:'black',fontSize:'18px'}} href="#pricing">About</Nav.Link>
           <Nav.Link style={{color:'black',fontSize:'18px'}} href="#pricing">Contact</Nav.Link>
-          <Nav.Link style={{color:'black',fontSize:'18px'}} href="#pricing">Dashboard</Nav.Link>
-          <Nav.Link style={{color:'black',fontSize:'18px'}} href="#pricing">News</Nav.Link>
+          <Nav.Link style={{color:'black',fontSize:'18px'}} as={Link} to={userRole+`/courses`}>Dashboard</Nav.Link>
+          <Nav.Link style={{color:'black',fontSize:'18px'}} as={Link} to={`/games`}>Games</Nav.Link>
         </Nav>
         <Nav style={{marginRight:'35px'}}>
-        <NavDropdown title="USER" id="collapsible-nav-dropdown" style={{fontSize:'18px',color:'blue'}}>
+        <NavDropdown title={username} id="collapsible-nav-dropdown" style={{fontSize:'18px',color:'blue'}}>
           {studentLoginStatus!='true' && <>
               
               <NavDropdown.Item componentClass='span' as={Link} to="/role">Login</NavDropdown.Item>
@@ -37,9 +44,12 @@ const Navigation = () => {
               
              
               {studentLoginStatus=='true' && <>
-              <NavDropdown.Item componentClass='span' as={Link} to="/regrole">Register</NavDropdown.Item>
-              <NavDropdown.Item className='dropdown-text' componentClass='span'as={Link} to="/dashboard">Dashboard</NavDropdown.Item>
-              <NavDropdown.Item  componentClass='span'as={Link} to="/student-logout">Logout</NavDropdown.Item></>}
+              
+            {/* Render link based on user role */}
+            <NavDropdown.Item className='dropdown-text' componentClass='span' as={Link} to={coursesLink}>
+                Dashboard
+            </NavDropdown.Item>
+                   <NavDropdown.Item  componentClass='span'as={Link} to="/student-logout">Logout</NavDropdown.Item></>}
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>

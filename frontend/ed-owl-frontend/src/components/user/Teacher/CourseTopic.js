@@ -85,6 +85,25 @@ const Topics = () => {
 
 
    },[]);
+   const handleRemoveStudent = (studentId) => {
+    axios.post(baseUrl+'/remove-student-from-course/', {
+        student_id: studentId,
+        module_id: module_id,
+    })
+    .then(response => {
+        if (response.data.success) {
+            // Reload the student list or update it in state
+            // Optionally, show a success message using Swal or other notification library
+        } else {
+            // Handle the error case
+            console.error(response.data.message);
+        }
+    })
+    .catch(error => {
+        // Handle the request failure
+        console.error(error);
+    });
+};
    const handleAssignmentDelete = (assignment_id) => {
     Swal.fire({
      title: 'Delete Assignment',
@@ -167,7 +186,7 @@ const Topics = () => {
    })
   }
   return (
-    <div className="row" style={{marginBottom:'20px'}}>
+    <div className="row" >
     <aside className='col-2'>
     <Sidebar/>
     </aside>
@@ -175,12 +194,13 @@ const Topics = () => {
     <section className='col-10' style={{backgroundColor: 'white'}}>
    
 
-    <Tabs
+     <Tabs
       defaultActiveKey="home"
       id="justify-tab-example"
       className="mb-3"
       justify
     >
+    {/*
       <Tab eventKey="home" title="Home">
              <div className="container py-5">
       <div className="row">
@@ -212,7 +232,7 @@ const Topics = () => {
     </div>
     
     <Button size="sm" style={{width:'30%', margin:'auto'}} as={Link} to={`/teacher/add-topic/`+module_id} variant="success">Add topics!</Button>{' '}
-      </Tab>
+      </Tab> */}
       <Tab eventKey="students" title="students">
       <Table striped bordered hover>
       <thead>
@@ -224,16 +244,19 @@ const Topics = () => {
         </tr>
       </thead>
       <tbody>
-      {studentList.map((student,index)=>
-      
-      <tr>
-      <td>{student.id}</td>
-      <td>{student.first_name}</td>
-      <td>{student.last_name}</td>
-      <td>{student.email}</td>
+      {studentList.map((student, index) => (
+    <tr key={index}>
+        <td>{student.id}</td>
+        <td>{student.first_name}</td>
+        <td>{student.last_name}</td>
+        <td>{student.email}</td>
+        <td>
+            <button style={{backgroundColor:'#ff3333',borderRadius:'15px',color:'white'}} variant="danger" onClick={() => handleRemoveStudent(student.id)}>
+                Remove
+            </button>
+        </td>
     </tr>
-     
-     )}
+))}
         
       </tbody>
     </Table>

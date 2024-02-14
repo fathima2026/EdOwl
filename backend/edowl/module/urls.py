@@ -119,7 +119,8 @@ urlpatterns = [
 
     path('hangman-rank/<int:hangman_id>',views.FetchHangmanRank),
     
-    path('rank/<int:module_id>',views.FetchRank)
+    path('rank/<int:module_id>',views.FetchRank),
+    path('remove-student-from-course/', views.remove_student_from_course, name='remove_student_from_course'),
 
 
 
